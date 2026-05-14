@@ -19,7 +19,7 @@
   body { font-family: 'Barlow', sans-serif; background: var(--offwhite); color: var(--black); }
   .header { background: var(--black); padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--lime); }
   .header-left { display: flex; align-items: center; gap: 16px; }
-  .logo-img { height: 30px; width: auto; }
+  .logo-img { height: 32px; width: auto; }
   .header-div { width: 1px; height: 26px; background: rgba(255,255,255,0.15); }
   .header-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase; }
   .header-right { display: flex; align-items: center; gap: 12px; }
@@ -52,35 +52,56 @@
   .pl-table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .pl-table thead { background: #f8f8f6; }
   .pl-table thead th { padding: 7px 10px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); white-space: nowrap; }
-  .pl-table thead th.left { text-align: left; min-width: 180px; position: sticky; left: 0; background: #f8f8f6; z-index: 2; }
+  .pl-table thead th.left { text-align: left; min-width: 200px; position: sticky; left: 0; background: #f8f8f6; z-index: 2; }
   .pl-table thead th.total-col { background: #f0f0ee; color: var(--black); border-left: 2px solid var(--border); }
-  .pl-section-header td { background: #f0f0ee; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding: 5px 10px; border-bottom: 1px solid var(--border); position: sticky; left: 0; }
+  /* Section header (Revenue / Costs) */
+  .pl-section-header td { background: #e8e8e6; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #444; padding: 5px 10px; border-bottom: 1px solid var(--border); }
+  /* Group subtotal row — clickable to expand/collapse */
+  .pl-group-row { background: #f4f4f2; cursor: pointer; border-bottom: 1px solid var(--border); }
+  .pl-group-row:hover { background: #eeeeeb; }
+  .pl-group-row td { padding: 8px 10px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+  .pl-group-row td.label { text-align: left; position: sticky; left: 0; background: #f4f4f2; z-index: 1; }
+  .pl-group-row:hover td.label { background: #eeeeeb; }
+  .pl-group-row td.red { color: var(--red); }
+  .pl-group-row td.green { color: var(--green); }
+  .pl-group-row td.total-col { background: #eeeeed; border-left: 2px solid var(--border); font-size: 13px; }
+  .group-chevron { font-size: 9px; color: #999; margin-right: 6px; display: inline-block; transition: transform 0.2s; }
+  .group-chevron.open { transform: rotate(90deg); }
+  /* Individual line rows */
   .pl-row { border-bottom: 1px solid #f5f5f3; cursor: pointer; transition: background 0.1s; }
   .pl-row:hover { background: #fafaf8; }
-  .pl-row td { padding: 7px 10px; text-align: right; font-family: 'DM Mono', monospace; font-size: 11px; white-space: nowrap; }
-  .pl-row td.label { text-align: left; font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 500; position: sticky; left: 0; background: #fff; z-index: 1; }
+  .pl-row td { padding: 6px 10px; padding-left: 24px; text-align: right; font-family: 'DM Mono', monospace; font-size: 11px; white-space: nowrap; }
+  .pl-row td.label { text-align: left; font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 400; position: sticky; left: 0; background: #fff; z-index: 1; padding-left: 24px; }
   .pl-row:hover td.label { background: #fafaf8; }
   .pl-row td.red { color: var(--red); }
   .pl-row td.green { color: var(--green); }
   .pl-row td.total-col { background: #fafaf8; border-left: 2px solid var(--border); font-weight: 700; font-size: 12px; }
   .pl-row:hover td.total-col { background: #f5f5f0; }
+  /* Grand total rows */
   .pl-total-row td { padding: 8px 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 800; border-top: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; white-space: nowrap; }
-  .pl-total-row td.label { text-align: left; font-family: 'Barlow Condensed', sans-serif; position: sticky; left: 0; background: #fff; z-index: 1; }
+  .pl-total-row td.label { text-align: left; position: sticky; left: 0; background: #fff; z-index: 1; }
   .pl-total-row td.red { color: var(--red); }
   .pl-total-row td.green { color: var(--green); }
   .pl-total-row td.total-col { background: #f0f0ee; border-left: 2px solid var(--border); font-size: 14px; }
-  .drill-arrow { color: #ccc; font-size: 10px; margin-left: 4px; }
+  /* Drill down */
+  .drill-arrow { color: #ccc; font-size: 9px; margin-left: 4px; }
   .drill-row { display: none; background: #fafffe; }
   .drill-row.open { display: table-row; }
   .drill-table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .drill-table thead { background: #f0f8e8; }
-  .drill-table thead th { padding: 6px 14px 6px 28px; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; color: var(--lime-dark); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid #d8edb0; }
+  .drill-table thead th { padding: 6px 14px 6px 32px; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; color: var(--lime-dark); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid #d8edb0; }
   .drill-table thead th.right { text-align: right; }
   .drill-table tbody tr { border-bottom: 1px solid #f0f0ee; }
-  .drill-table td { padding: 7px 14px 7px 28px; }
+  .drill-table td { padding: 7px 14px 7px 32px; }
   .drill-table td.right { text-align: right; font-family: 'DM Mono', monospace; }
   .drill-table td.muted { color: var(--muted); font-size: 11px; }
-  .drill-loading { padding: 16px 28px; color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 8px; }
+  .drill-loading { padding: 16px 32px; color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 8px; }
+  /* Tooltip */
+  .tip { position: relative; display: inline-block; }
+  .tip-icon { display: inline-flex; align-items: center; justify-content: center; width: 13px; height: 13px; border-radius: 50%; background: #ddd; color: #666; font-size: 9px; font-weight: 700; margin-left: 5px; cursor: default; font-family: sans-serif; vertical-align: middle; }
+  .tip-box { display: none; position: absolute; left: 20px; top: -4px; background: #1a1a1a; color: #fff; font-size: 11px; font-family: 'Barlow', sans-serif; font-weight: 400; padding: 7px 10px; border-radius: 4px; width: 260px; z-index: 99; line-height: 1.5; white-space: normal; }
+  .tip:hover .tip-box { display: block; }
+  /* Spinner */
   .spinner { width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--lime); border-radius: 50%; animation: spin 0.8s linear infinite; }
   .loading-full { display: flex; align-items: center; justify-content: center; height: 160px; font-size: 13px; color: var(--muted); gap: 10px; background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; }
   .spinner-lg { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--lime); border-radius: 50%; animation: spin 0.8s linear infinite; }
@@ -128,7 +149,7 @@
     <div class="stat-card">
       <div class="stat-label">Revenue</div>
       <div class="stat-value green" id="card-revenue">&mdash;</div>
-      <div class="stat-sub">internal sales to engineering</div>
+      <div class="stat-sub">internal transfer to engineering</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Total Costs</div>
@@ -148,7 +169,7 @@
   </div>
 
   <div class="table-bar">
-    <div class="table-bar-title">P&amp;L Detail &mdash; click any line to drill into transactions</div>
+    <div class="table-bar-title">P&amp;L Detail &mdash; click group rows to expand, line rows to drill into transactions</div>
     <div class="table-count" id="table-period"></div>
   </div>
   <div id="main-content">
@@ -157,15 +178,52 @@
 </div>
 
 <script>
-let summaryData = [];
-let linesData = [];
-let openDrills = {};
+let summaryData = [], linesData = [];
+let openDrills = {}, openGroups = {};
+
+// Cost group definitions — order matters, ungrouped lines fall into Other
+const COST_GROUPS = [
+  {
+    id: 'cos',
+    label: 'Cost of Sales',
+    lines: ['Materials consumed', 'Aylesford - Purchases (Mfg)', 'Closing raw materials stock value']
+  },
+  {
+    id: 'people',
+    label: 'People',
+    lines: ['Salaries & NIC - Aylesford staff', 'Agency staff', 'Aylesford - Staff Welfare/Stationery']
+  },
+  {
+    id: 'premises',
+    label: 'Premises',
+    lines: ['Aylesford - Rent', 'Aylesford - Rates', 'Aylesford - Insurance', 'Aylesford - Heat & Light',
+            'Aylesford - Waste disposal', 'Aylesford - Telephone and Broadband', 'Aylesford - Premises Maintenance',
+            'Aylesford - Equipment & Hire', 'Aylesford - Equipment Maintenance']
+  },
+  {
+    id: 'other',
+    label: 'Other',
+    lines: [] // catch-all for anything not in above groups
+  }
+];
+
+const LINE_TOOLTIPS = {
+  'Assembly Contribution': 'The price at which Fixmart transfers goods and assembly services to the engineering operation (Fixmart Engineering, customer FIX105). This is the internal transfer value booked in OrderWise — it is not a market price or cost recovery figure.',
+  'Materials consumed': 'Monthly reposition journal (nominal 5020) representing raw materials consumed in production during the period.',
+  'Closing raw materials stock value': 'Credit entry (nominal 5206) representing the value of raw materials purchased but not yet consumed. Offsets materials purchased to give net materials used.',
+  'Agency staff': 'Temporary agency labour costs (nominal 6035), separated from permanent payroll.'
+};
 
 function toMonthStr(d) { return d.toISOString().slice(0,7); }
 function firstDay(ym) { return ym + '-01'; }
 function lastDay(ym) {
   const [y,m] = ym.split('-').map(Number);
   return new Date(y,m,0).toISOString().slice(0,10);
+}
+function fmtMonth(ym) {
+  const [y,m] = ym.slice(0,7).split('-');
+  const ms = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return ms[parseInt(m,10)-1] + ' ' + y.slice(2);
 }
 
 function setMonths(n) {
@@ -177,7 +235,6 @@ function setMonths(n) {
   document.getElementById('btn-'+n+'m').classList.add('active');
   loadData();
 }
-
 function setAll() {
   document.getElementById('month-from').value = '2025-01';
   document.getElementById('month-to').value = toMonthStr(new Date());
@@ -185,12 +242,10 @@ function setAll() {
   document.getElementById('btn-all').classList.add('active');
   loadData();
 }
-
 function onMonthChange() {
   document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
   loadData();
 }
-
 function initDates() {
   const to = new Date(), from = new Date();
   from.setMonth(from.getMonth()-5); from.setDate(1);
@@ -207,7 +262,7 @@ async function loadData() {
   document.getElementById('main-content').innerHTML = '<div class="loading-full"><div class="spinner-lg"></div> Loading from BigQuery...</div>';
   document.getElementById('table-period').textContent = '';
   ['card-revenue','card-costs','card-net','card-avg'].forEach(id => document.getElementById(id).textContent = '\u2014');
-  openDrills = {};
+  openDrills = {}; openGroups = {};
 
   try {
     const [sr, lr] = await Promise.all([
@@ -244,19 +299,11 @@ async function loadData() {
   }
 }
 
-function fmtMonth(ym) {
-  const [y,m] = ym.slice(0,7).split('-');
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return months[parseInt(m,10)-1] + ' ' + y.slice(2);
-}
-
 function renderPL(sd, ed) {
-  // Get sorted unique months from data
   const monthSet = new Set();
   linesData.forEach(r => { if(r.period_date) monthSet.add(r.period_date.slice(0,7)); });
   const months = Array.from(monthSet).sort();
 
-  // Build lookup: label -> month -> total
   const byLabel = {};
   linesData.forEach(r => {
     const lbl = r.line_label, mo = r.period_date ? r.period_date.slice(0,7) : '';
@@ -266,70 +313,109 @@ function renderPL(sd, ed) {
   });
 
   const revLines = Object.entries(byLabel).filter(([,v])=>v.section==='Revenue').sort((a,b)=>b[1].total-a[1].total);
-  const costLines = Object.entries(byLabel).filter(([,v])=>v.section==='Cost').sort((a,b)=>a[1].total-b[1].total);
+  const allCostLines = Object.entries(byLabel).filter(([,v])=>v.section==='Cost');
+
+  // Assign cost lines to groups
+  const assignedLabels = new Set();
+  const groupedLines = COST_GROUPS.map(g => {
+    const lines = g.lines.length > 0
+      ? g.lines.map(lbl => { const e = allCostLines.find(([l])=>l===lbl); if(e) assignedLabels.add(lbl); return e; }).filter(Boolean)
+      : allCostLines.filter(([lbl]) => !assignedLabels.has(lbl)); // other = catch-all
+    return { ...g, lines };
+  });
+  // Add any unassigned to Other
+  allCostLines.forEach(([lbl]) => {
+    if (!assignedLabels.has(lbl)) {
+      const og = groupedLines.find(g=>g.id==='other');
+      if (og && !og.lines.find(([l])=>l===lbl)) og.lines.push(allCostLines.find(([l])=>l===lbl));
+    }
+  });
 
   const totRevByMonth = {}, totCostByMonth = {};
   months.forEach(mo => {
     totRevByMonth[mo] = revLines.reduce((s,[,v])=>s+(v.months[mo]||0),0);
-    totCostByMonth[mo] = costLines.reduce((s,[,v])=>s+(v.months[mo]||0),0);
+    totCostByMonth[mo] = allCostLines.reduce((s,[,v])=>s+(v.months[mo]||0),0);
   });
   const totRev = revLines.reduce((s,[,v])=>s+v.total,0);
-  const totCost = costLines.reduce((s,[,v])=>s+v.total,0);
+  const totCost = allCostLines.reduce((s,[,v])=>s+v.total,0);
   const totNet = totRev + totCost;
-  const numCols = months.length + 2; // label + months + total
+  const numCols = months.length + 2;
 
   let h = '<div class="pl-table-wrap"><table class="pl-table"><thead><tr>';
   h += '<th class="left">Line</th>';
   months.forEach(mo => { h += `<th>${fmtMonth(mo)}</th>`; });
-  h += '<th class="total-col">Total</th>';
-  h += '</tr></thead><tbody>';
+  h += '<th class="total-col">Total</th></tr></thead><tbody>';
 
-  // Revenue section
+  // Revenue
   h += `<tr class="pl-section-header"><td colspan="${numCols}">Revenue</td></tr>`;
   revLines.forEach(([lbl,v]) => {
     const id = eid(lbl);
+    const tip = LINE_TOOLTIPS[lbl] ? `<span class="tip"><span class="tip-icon">i</span><span class="tip-box">${LINE_TOOLTIPS[lbl]}</span></span>` : '';
     h += `<tr class="pl-row" onclick="toggleDrill('${ejs(lbl)}','${sd}','${ed}','${id}')">`;
-    h += `<td class="label">${eh(lbl)} <span class="drill-arrow">&#9654;</span></td>`;
+    h += `<td class="label">${eh(lbl)}${tip} <span class="drill-arrow">&#9654;</span></td>`;
     months.forEach(mo => { h += `<td class="green">${v.months[mo] ? fv(v.months[mo]) : '\u2014'}</td>`; });
-    h += `<td class="total-col green">${fv(v.total)}</td>`;
-    h += '</tr>';
+    h += `<td class="total-col green">${fv(v.total)}</td></tr>`;
     h += `<tr class="drill-row" id="dr-${id}"><td colspan="${numCols}" style="padding:0"><div id="di-${id}"></div></td></tr>`;
   });
   h += `<tr class="pl-total-row"><td class="label">Total Revenue</td>`;
   months.forEach(mo => { h += `<td class="green">${fv(totRevByMonth[mo]||0)}</td>`; });
   h += `<td class="total-col green">${fv(totRev)}</td></tr>`;
 
-  // Costs section
+  // Costs — grouped
   h += `<tr class="pl-section-header"><td colspan="${numCols}">Costs</td></tr>`;
-  costLines.forEach(([lbl,v]) => {
-    const id = eid(lbl);
-    const cls = v.total<0?'red':'green';
-    h += `<tr class="pl-row" onclick="toggleDrill('${ejs(lbl)}','${sd}','${ed}','${id}')">`;
-    h += `<td class="label">${eh(lbl)} <span class="drill-arrow">&#9654;</span></td>`;
-    months.forEach(mo => {
-      const val = v.months[mo] || 0;
-      h += `<td class="${val<0?'red':'green'}">${val ? fv(val) : '\u2014'}</td>`;
+  groupedLines.forEach(grp => {
+    if (!grp.lines.length) return;
+    const grpTotal = grp.lines.reduce((s,[,v])=>s+v.total,0);
+    const grpByMonth = {};
+    months.forEach(mo => { grpByMonth[mo] = grp.lines.reduce((s,[,v])=>s+(v.months[mo]||0),0); });
+    const gid = 'grp_' + grp.id;
+    const isOpen = !!openGroups[gid];
+    const cls = grpTotal<0?'red':'green';
+
+    h += `<tr class="pl-group-row" onclick="toggleGroup('${gid}')">`;
+    h += `<td class="label"><span class="group-chevron${isOpen?' open':''}" id="chev-${gid}">&#9654;</span>${eh(grp.label)}</td>`;
+    months.forEach(mo => { const v=grpByMonth[mo]||0; h += `<td class="${v<0?'red':'green'}">${v?fv(v):'\u2014'}</td>`; });
+    h += `<td class="total-col ${cls}">${fv(grpTotal)}</td></tr>`;
+
+    // Individual lines (hidden by default)
+    grp.lines.forEach(([lbl,v]) => {
+      const id = eid(lbl);
+      const lineCls = v.total<0?'red':'green';
+      const tip = LINE_TOOLTIPS[lbl] ? `<span class="tip"><span class="tip-icon">i</span><span class="tip-box">${LINE_TOOLTIPS[lbl]}</span></span>` : '';
+      h += `<tr class="pl-row group-child-${gid}" style="display:${isOpen?'table-row':'none'}" onclick="toggleDrill('${ejs(lbl)}','${sd}','${ed}','${id}')">`;
+      h += `<td class="label">${eh(lbl)}${tip} <span class="drill-arrow">&#9654;</span></td>`;
+      months.forEach(mo => { const val=v.months[mo]||0; h += `<td class="${val<0?'red':'green'}">${val?fv(val):'\u2014'}</td>`; });
+      h += `<td class="total-col ${lineCls}">${fv(v.total)}</td></tr>`;
+      h += `<tr class="drill-row group-child-${gid}" id="dr-${id}" style="display:none"><td colspan="${numCols}" style="padding:0"><div id="di-${id}"></div></td></tr>`;
     });
-    h += `<td class="total-col ${cls}">${fv(v.total)}</td>`;
-    h += '</tr>';
-    h += `<tr class="drill-row" id="dr-${id}"><td colspan="${numCols}" style="padding:0"><div id="di-${id}"></div></td></tr>`;
   });
+
   h += `<tr class="pl-total-row"><td class="label">Total Costs</td>`;
   months.forEach(mo => { h += `<td class="red">${fv(totCostByMonth[mo]||0)}</td>`; });
   h += `<td class="total-col red">${fv(totCost)}</td></tr>`;
 
-  // Net result row
   const netByMonth = {};
   months.forEach(mo => { netByMonth[mo] = (totRevByMonth[mo]||0) + (totCostByMonth[mo]||0); });
   h += `<tr class="pl-total-row" style="background:#f8f8f6"><td class="label">Net Result</td>`;
-  months.forEach(mo => {
-    const v = netByMonth[mo]||0;
-    h += `<td class="${v>=0?'green':'red'}">${fv(v)}</td>`;
-  });
+  months.forEach(mo => { const v=netByMonth[mo]||0; h += `<td class="${v>=0?'green':'red'}">${fv(v)}</td>`; });
   h += `<td class="total-col ${totNet>=0?'green':'red'}">${fv(totNet)}</td></tr>`;
 
   h += '</tbody></table></div>';
   document.getElementById('main-content').innerHTML = h;
+}
+
+function toggleGroup(gid) {
+  openGroups[gid] = !openGroups[gid];
+  const isOpen = openGroups[gid];
+  // Toggle chevron
+  const chev = document.getElementById('chev-'+gid);
+  if (chev) chev.classList.toggle('open', isOpen);
+  // Show/hide child rows
+  document.querySelectorAll('.group-child-'+gid).forEach(row => {
+    row.style.display = isOpen ? 'table-row' : 'none';
+    // If closing, also close any open drills within this group
+    if (!isOpen) row.classList.remove('open');
+  });
 }
 
 async function toggleDrill(lbl, sd, ed, id) {
@@ -337,11 +423,11 @@ async function toggleDrill(lbl, sd, ed, id) {
   const inner = document.getElementById('di-'+id);
   if (!row) return;
   if (openDrills[id]) {
-    row.classList.remove('open');
+    row.style.display = 'none';
     openDrills[id] = false;
     return;
   }
-  row.classList.add('open');
+  row.style.display = 'table-row';
   openDrills[id] = true;
   inner.innerHTML = '<div class="drill-loading"><div class="spinner"></div> Loading transactions...</div>';
   try {
