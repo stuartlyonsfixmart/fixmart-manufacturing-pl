@@ -1,0 +1,14 @@
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - run
+      - deploy
+      - fixmart-manufacturing-pl
+      - --source=.
+      - --region=europe-west1
+      - --platform=managed
+      - --allow-unauthenticated
+      - --min-instances=1
+    entrypoint: gcloud
+options:
+  logging: CLOUD_LOGGING_ONLY
