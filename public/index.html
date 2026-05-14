@@ -17,11 +17,11 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Barlow', sans-serif; background: var(--offwhite); color: var(--black); }
-  .header { background: var(--black); padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--lime); }
+  .header { background: var(--black); padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--lime); }
   .header-left { display: flex; align-items: center; gap: 16px; }
-  .logo-img { height: 32px; width: auto; }
+  .logo-img { height: 36px; width: auto; background: #fff; border-radius: 4px; padding: 4px 8px; }
   .header-div { width: 1px; height: 26px; background: rgba(255,255,255,0.15); }
-  .header-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase; }
+  .header-title { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase; }
   .header-right { display: flex; align-items: center; gap: 12px; }
   .cache-badge { background: rgba(154,205,0,0.15); border: 1px solid rgba(154,205,0,0.3); color: var(--lime); font-size: 10px; font-weight: 700; font-family: 'Barlow Condensed', sans-serif; padding: 3px 9px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; display: none; }
   .cache-badge.show { display: inline; }
@@ -30,80 +30,73 @@
   .logout-btn:hover { color: rgba(255,255,255,0.7); }
   .main { padding: 16px 24px; max-width: 100%; margin: 0 auto; }
   .filters-bar { background: var(--black); border-radius: 6px; padding: 10px 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
-  .filter-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
+  .filter-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
   .filter-group { display: flex; align-items: center; gap: 7px; }
   .filter-div { width: 1px; height: 20px; background: rgba(255,255,255,0.1); }
   .toggle { display: flex; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; }
-  .toggle-btn { padding: 4px 14px; font-size: 12px; font-weight: 700; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.05em; cursor: pointer; color: rgba(255,255,255,0.45); background: transparent; border: none; }
+  .toggle-btn { padding: 4px 14px; font-size: 13px; font-weight: 700; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.05em; cursor: pointer; color: rgba(255,255,255,0.45); background: transparent; border: none; }
   .toggle-btn.active { background: var(--lime); color: var(--black); }
   .filter-select { font-family: 'Barlow', sans-serif; font-size: 13px; color: #fff; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; padding: 4px 9px; cursor: pointer; outline: none; }
   .filter-select option { background: #333; }
   .summary-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
   .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px 20px; }
-  .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .stat-value { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; line-height: 1; }
+  .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 800; line-height: 1; }
   .stat-value.red { color: var(--red); }
   .stat-value.green { color: var(--green); }
-  .stat-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
   .table-bar { background: var(--black); border-radius: 6px 6px 0 0; padding: 9px 16px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
-  .table-bar-title { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.07em; }
-  .table-count { font-size: 11px; color: rgba(255,255,255,0.45); font-family: 'DM Mono', monospace; }
+  .table-bar-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.07em; }
+  .table-count { font-size: 12px; color: rgba(255,255,255,0.45); font-family: 'DM Mono', monospace; }
   .pl-table-wrap { background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; overflow-x: auto; }
-  .pl-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .pl-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .pl-table thead { background: #f8f8f6; }
-  .pl-table thead th { padding: 7px 10px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); white-space: nowrap; }
-  .pl-table thead th.left { text-align: left; min-width: 200px; position: sticky; left: 0; background: #f8f8f6; z-index: 2; }
+  .pl-table thead th { padding: 8px 12px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .pl-table thead th.left { text-align: left; min-width: 220px; position: sticky; left: 0; background: #f8f8f6; z-index: 2; }
   .pl-table thead th.total-col { background: #f0f0ee; color: var(--black); border-left: 2px solid var(--border); }
-  /* Section header (Revenue / Costs) */
-  .pl-section-header td { background: #e8e8e6; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #444; padding: 5px 10px; border-bottom: 1px solid var(--border); }
-  /* Group subtotal row — clickable to expand/collapse */
+  .pl-section-header td { background: #e8e8e6; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #444; padding: 6px 12px; border-bottom: 1px solid var(--border); }
   .pl-group-row { background: #f4f4f2; cursor: pointer; border-bottom: 1px solid var(--border); }
   .pl-group-row:hover { background: #eeeeeb; }
-  .pl-group-row td { padding: 8px 10px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+  .pl-group-row td { padding: 9px 12px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
   .pl-group-row td.label { text-align: left; position: sticky; left: 0; background: #f4f4f2; z-index: 1; }
   .pl-group-row:hover td.label { background: #eeeeeb; }
   .pl-group-row td.red { color: var(--red); }
   .pl-group-row td.green { color: var(--green); }
-  .pl-group-row td.total-col { background: #eeeeed; border-left: 2px solid var(--border); font-size: 13px; }
+  .pl-group-row td.total-col { background: #eeeeed; border-left: 2px solid var(--border); font-size: 15px; }
   .group-chevron { font-size: 9px; color: #999; margin-right: 6px; display: inline-block; transition: transform 0.2s; }
   .group-chevron.open { transform: rotate(90deg); }
-  /* Individual line rows */
   .pl-row { border-bottom: 1px solid #f5f5f3; cursor: pointer; transition: background 0.1s; }
   .pl-row:hover { background: #fafaf8; }
-  .pl-row td { padding: 6px 10px; padding-left: 24px; text-align: right; font-family: 'DM Mono', monospace; font-size: 11px; white-space: nowrap; }
-  .pl-row td.label { text-align: left; font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 400; position: sticky; left: 0; background: #fff; z-index: 1; padding-left: 24px; }
+  .pl-row td { padding: 8px 12px; padding-left: 28px; text-align: right; font-family: 'DM Mono', monospace; font-size: 12px; white-space: nowrap; }
+  .pl-row td.label { text-align: left; font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 400; position: sticky; left: 0; background: #fff; z-index: 1; padding-left: 28px; }
   .pl-row:hover td.label { background: #fafaf8; }
   .pl-row td.red { color: var(--red); }
   .pl-row td.green { color: var(--green); }
-  .pl-row td.total-col { background: #fafaf8; border-left: 2px solid var(--border); font-weight: 700; font-size: 12px; }
+  .pl-row td.total-col { background: #fafaf8; border-left: 2px solid var(--border); font-weight: 700; font-size: 13px; }
   .pl-row:hover td.total-col { background: #f5f5f0; }
-  /* Grand total rows */
-  .pl-total-row td { padding: 8px 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 800; border-top: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; white-space: nowrap; }
+  .pl-total-row td { padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; border-top: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; white-space: nowrap; }
   .pl-total-row td.label { text-align: left; position: sticky; left: 0; background: #fff; z-index: 1; }
   .pl-total-row td.red { color: var(--red); }
   .pl-total-row td.green { color: var(--green); }
-  .pl-total-row td.total-col { background: #f0f0ee; border-left: 2px solid var(--border); font-size: 14px; }
-  /* Drill down */
+  .pl-total-row td.total-col { background: #f0f0ee; border-left: 2px solid var(--border); font-size: 16px; }
   .drill-arrow { color: #ccc; font-size: 9px; margin-left: 4px; }
   .drill-row { display: none; background: #fafffe; }
   .drill-row.open { display: table-row; }
-  .drill-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .drill-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .drill-table thead { background: #f0f8e8; }
-  .drill-table thead th { padding: 6px 14px 6px 32px; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; color: var(--lime-dark); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid #d8edb0; }
+  .drill-table thead th { padding: 7px 14px 7px 32px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; color: var(--lime-dark); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid #d8edb0; }
   .drill-table thead th.right { text-align: right; }
   .drill-table tbody tr { border-bottom: 1px solid #f0f0ee; }
-  .drill-table td { padding: 7px 14px 7px 32px; }
+  .drill-table td { padding: 8px 14px 8px 32px; font-size: 13px; }
   .drill-table td.right { text-align: right; font-family: 'DM Mono', monospace; }
-  .drill-table td.muted { color: var(--muted); font-size: 11px; }
-  .drill-loading { padding: 16px 32px; color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 8px; }
-  /* Tooltip */
+  .drill-table td.muted { color: var(--muted); font-size: 12px; }
+  .drill-loading { padding: 16px 32px; color: var(--muted); font-size: 13px; display: flex; align-items: center; gap: 8px; }
   .tip { position: relative; display: inline-block; }
-  .tip-icon { display: inline-flex; align-items: center; justify-content: center; width: 13px; height: 13px; border-radius: 50%; background: #ddd; color: #666; font-size: 9px; font-weight: 700; margin-left: 5px; cursor: default; font-family: sans-serif; vertical-align: middle; }
-  .tip-box { display: none; position: absolute; left: 20px; top: -4px; background: #1a1a1a; color: #fff; font-size: 11px; font-family: 'Barlow', sans-serif; font-weight: 400; padding: 7px 10px; border-radius: 4px; width: 260px; z-index: 99; line-height: 1.5; white-space: normal; }
+  .tip-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: #ddd; color: #666; font-size: 9px; font-weight: 700; margin-left: 5px; cursor: default; font-family: sans-serif; vertical-align: middle; }
+  .tip-box { display: none; position: absolute; left: 20px; top: -4px; background: #1a1a1a; color: #fff; font-size: 12px; font-family: 'Barlow', sans-serif; font-weight: 400; padding: 8px 11px; border-radius: 4px; width: 280px; z-index: 99; line-height: 1.5; white-space: normal; }
   .tip:hover .tip-box { display: block; }
-  /* Spinner */
   .spinner { width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--lime); border-radius: 50%; animation: spin 0.8s linear infinite; }
-  .loading-full { display: flex; align-items: center; justify-content: center; height: 160px; font-size: 13px; color: var(--muted); gap: 10px; background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; }
+  .loading-full { display: flex; align-items: center; justify-content: center; height: 160px; font-size: 14px; color: var(--muted); gap: 10px; background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; }
   .spinner-lg { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--lime); border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
@@ -181,30 +174,11 @@
 let summaryData = [], linesData = [];
 let openDrills = {}, openGroups = {};
 
-// Cost group definitions — order matters, ungrouped lines fall into Other
 const COST_GROUPS = [
-  {
-    id: 'cos',
-    label: 'Cost of Sales',
-    lines: ['Materials consumed', 'Aylesford - Purchases (Mfg)', 'Closing raw materials stock value']
-  },
-  {
-    id: 'people',
-    label: 'People',
-    lines: ['Salaries & NIC - Aylesford staff', 'Agency staff', 'Aylesford - Staff Welfare/Stationery']
-  },
-  {
-    id: 'premises',
-    label: 'Premises',
-    lines: ['Aylesford - Rent', 'Aylesford - Rates', 'Aylesford - Insurance', 'Aylesford - Heat & Light',
-            'Aylesford - Waste disposal', 'Aylesford - Telephone and Broadband', 'Aylesford - Premises Maintenance',
-            'Aylesford - Equipment & Hire', 'Aylesford - Equipment Maintenance']
-  },
-  {
-    id: 'other',
-    label: 'Other',
-    lines: [] // catch-all for anything not in above groups
-  }
+  { id: 'cos', label: 'Cost of Sales', lines: ['Materials consumed', 'Aylesford - Purchases (Mfg)', 'Closing raw materials stock value'] },
+  { id: 'people', label: 'People', lines: ['Salaries & NIC - Aylesford staff', 'Agency staff', 'Aylesford - Staff Welfare/Stationery'] },
+  { id: 'premises', label: 'Premises', lines: ['Aylesford - Rent', 'Aylesford - Rates', 'Aylesford - Insurance', 'Aylesford - Heat & Light', 'Aylesford - Waste disposal', 'Aylesford - Telephone and Broadband', 'Aylesford - Premises Maintenance', 'Aylesford - Equipment & Hire', 'Aylesford - Equipment Maintenance'] },
+  { id: 'other', label: 'Other', lines: [] }
 ];
 
 const LINE_TOOLTIPS = {
@@ -216,15 +190,8 @@ const LINE_TOOLTIPS = {
 
 function toMonthStr(d) { return d.toISOString().slice(0,7); }
 function firstDay(ym) { return ym + '-01'; }
-function lastDay(ym) {
-  const [y,m] = ym.split('-').map(Number);
-  return new Date(y,m,0).toISOString().slice(0,10);
-}
-function fmtMonth(ym) {
-  const [y,m] = ym.slice(0,7).split('-');
-  const ms = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return ms[parseInt(m,10)-1] + ' ' + y.slice(2);
-}
+function lastDay(ym) { const [y,m] = ym.split('-').map(Number); return new Date(y,m,0).toISOString().slice(0,10); }
+function fmtMonth(ym) { const [y,m] = ym.slice(0,7).split('-'); const ms = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return ms[parseInt(m,10)-1] + ' ' + y.slice(2); }
 
 function setMonths(n) {
   const to = new Date(), from = new Date();
@@ -242,10 +209,7 @@ function setAll() {
   document.getElementById('btn-all').classList.add('active');
   loadData();
 }
-function onMonthChange() {
-  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
-  loadData();
-}
+function onMonthChange() { document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active')); loadData(); }
 function initDates() {
   const to = new Date(), from = new Date();
   from.setMonth(from.getMonth()-5); from.setDate(1);
@@ -258,31 +222,22 @@ async function loadData() {
   const tm = document.getElementById('month-to').value;
   if (!fm || !tm) return;
   const sd = firstDay(fm), ed = lastDay(tm);
-
   document.getElementById('main-content').innerHTML = '<div class="loading-full"><div class="spinner-lg"></div> Loading from BigQuery...</div>';
   document.getElementById('table-period').textContent = '';
   ['card-revenue','card-costs','card-net','card-avg'].forEach(id => document.getElementById(id).textContent = '\u2014');
   openDrills = {}; openGroups = {};
-
   try {
-    const [sr, lr] = await Promise.all([
-      fetch(`/api/summary?startDate=${sd}&endDate=${ed}`),
-      fetch(`/api/lines?startDate=${sd}&endDate=${ed}`)
-    ]);
+    const [sr, lr] = await Promise.all([fetch(`/api/summary?startDate=${sd}&endDate=${ed}`), fetch(`/api/lines?startDate=${sd}&endDate=${ed}`)]);
     const sj = await sr.json(), lj = await lr.json();
     if (!sj.success) throw new Error(sj.error);
     if (!lj.success) throw new Error(lj.error);
-
     document.getElementById('cache-badge').classList.toggle('show', !!(sj.fromCache||lj.fromCache));
     document.getElementById('last-loaded').textContent = 'Updated ' + new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-
     summaryData = sj.data; linesData = lj.data;
-
     const totRev = summaryData.reduce((s,r)=>s+(r.revenue||0),0);
     const totCost = summaryData.reduce((s,r)=>s+(r.costs||0),0);
     const totNet = summaryData.reduce((s,r)=>s+(r.net_result||0),0);
     const avgNet = summaryData.length ? totNet/summaryData.length : 0;
-
     document.getElementById('card-revenue').textContent = fmt(totRev);
     document.getElementById('card-costs').textContent = fmt(Math.abs(totCost));
     const ne = document.getElementById('card-net');
@@ -291,7 +246,6 @@ async function loadData() {
     const ae = document.getElementById('card-avg');
     ae.textContent = (avgNet<0?'-':'') + fmt(Math.abs(avgNet));
     ae.className = 'stat-value ' + (avgNet>=0?'green':'red');
-
     document.getElementById('table-period').textContent = fm + ' to ' + tm;
     renderPL(sd, ed);
   } catch(err) {
@@ -303,7 +257,6 @@ function renderPL(sd, ed) {
   const monthSet = new Set();
   linesData.forEach(r => { if(r.period_date) monthSet.add(r.period_date.slice(0,7)); });
   const months = Array.from(monthSet).sort();
-
   const byLabel = {};
   linesData.forEach(r => {
     const lbl = r.line_label, mo = r.period_date ? r.period_date.slice(0,7) : '';
@@ -311,26 +264,21 @@ function renderPL(sd, ed) {
     byLabel[lbl].months[mo] = (byLabel[lbl].months[mo] || 0) + r.total;
     byLabel[lbl].total += r.total;
   });
-
   const revLines = Object.entries(byLabel).filter(([,v])=>v.section==='Revenue').sort((a,b)=>b[1].total-a[1].total);
   const allCostLines = Object.entries(byLabel).filter(([,v])=>v.section==='Cost');
-
-  // Assign cost lines to groups
   const assignedLabels = new Set();
   const groupedLines = COST_GROUPS.map(g => {
     const lines = g.lines.length > 0
       ? g.lines.map(lbl => { const e = allCostLines.find(([l])=>l===lbl); if(e) assignedLabels.add(lbl); return e; }).filter(Boolean)
-      : allCostLines.filter(([lbl]) => !assignedLabels.has(lbl)); // other = catch-all
+      : allCostLines.filter(([lbl]) => !assignedLabels.has(lbl));
     return { ...g, lines };
   });
-  // Add any unassigned to Other
   allCostLines.forEach(([lbl]) => {
     if (!assignedLabels.has(lbl)) {
       const og = groupedLines.find(g=>g.id==='other');
       if (og && !og.lines.find(([l])=>l===lbl)) og.lines.push(allCostLines.find(([l])=>l===lbl));
     }
   });
-
   const totRevByMonth = {}, totCostByMonth = {};
   months.forEach(mo => {
     totRevByMonth[mo] = revLines.reduce((s,[,v])=>s+(v.months[mo]||0),0);
@@ -346,7 +294,6 @@ function renderPL(sd, ed) {
   months.forEach(mo => { h += `<th>${fmtMonth(mo)}</th>`; });
   h += '<th class="total-col">Total</th></tr></thead><tbody>';
 
-  // Revenue
   h += `<tr class="pl-section-header"><td colspan="${numCols}">Revenue</td></tr>`;
   revLines.forEach(([lbl,v]) => {
     const id = eid(lbl);
@@ -361,7 +308,6 @@ function renderPL(sd, ed) {
   months.forEach(mo => { h += `<td class="green">${fv(totRevByMonth[mo]||0)}</td>`; });
   h += `<td class="total-col green">${fv(totRev)}</td></tr>`;
 
-  // Costs — grouped
   h += `<tr class="pl-section-header"><td colspan="${numCols}">Costs</td></tr>`;
   groupedLines.forEach(grp => {
     if (!grp.lines.length) return;
@@ -371,13 +317,10 @@ function renderPL(sd, ed) {
     const gid = 'grp_' + grp.id;
     const isOpen = !!openGroups[gid];
     const cls = grpTotal<0?'red':'green';
-
     h += `<tr class="pl-group-row" onclick="toggleGroup('${gid}')">`;
     h += `<td class="label"><span class="group-chevron${isOpen?' open':''}" id="chev-${gid}">&#9654;</span>${eh(grp.label)}</td>`;
     months.forEach(mo => { const v=grpByMonth[mo]||0; h += `<td class="${v<0?'red':'green'}">${v?fv(v):'\u2014'}</td>`; });
     h += `<td class="total-col ${cls}">${fv(grpTotal)}</td></tr>`;
-
-    // Individual lines (hidden by default)
     grp.lines.forEach(([lbl,v]) => {
       const id = eid(lbl);
       const lineCls = v.total<0?'red':'green';
@@ -393,13 +336,11 @@ function renderPL(sd, ed) {
   h += `<tr class="pl-total-row"><td class="label">Total Costs</td>`;
   months.forEach(mo => { h += `<td class="red">${fv(totCostByMonth[mo]||0)}</td>`; });
   h += `<td class="total-col red">${fv(totCost)}</td></tr>`;
-
   const netByMonth = {};
   months.forEach(mo => { netByMonth[mo] = (totRevByMonth[mo]||0) + (totCostByMonth[mo]||0); });
   h += `<tr class="pl-total-row" style="background:#f8f8f6"><td class="label">Net Result</td>`;
   months.forEach(mo => { const v=netByMonth[mo]||0; h += `<td class="${v>=0?'green':'red'}">${fv(v)}</td>`; });
   h += `<td class="total-col ${totNet>=0?'green':'red'}">${fv(totNet)}</td></tr>`;
-
   h += '</tbody></table></div>';
   document.getElementById('main-content').innerHTML = h;
 }
@@ -407,13 +348,10 @@ function renderPL(sd, ed) {
 function toggleGroup(gid) {
   openGroups[gid] = !openGroups[gid];
   const isOpen = openGroups[gid];
-  // Toggle chevron
   const chev = document.getElementById('chev-'+gid);
   if (chev) chev.classList.toggle('open', isOpen);
-  // Show/hide child rows
   document.querySelectorAll('.group-child-'+gid).forEach(row => {
     row.style.display = isOpen ? 'table-row' : 'none';
-    // If closing, also close any open drills within this group
     if (!isOpen) row.classList.remove('open');
   });
 }
@@ -422,11 +360,7 @@ async function toggleDrill(lbl, sd, ed, id) {
   const row = document.getElementById('dr-'+id);
   const inner = document.getElementById('di-'+id);
   if (!row) return;
-  if (openDrills[id]) {
-    row.style.display = 'none';
-    openDrills[id] = false;
-    return;
-  }
+  if (openDrills[id]) { row.style.display = 'none'; openDrills[id] = false; return; }
   row.style.display = 'table-row';
   openDrills[id] = true;
   inner.innerHTML = '<div class="drill-loading"><div class="spinner"></div> Loading transactions...</div>';
@@ -438,7 +372,7 @@ async function toggleDrill(lbl, sd, ed, id) {
     let t = '<table class="drill-table"><thead><tr><th>Date</th><th>Reference</th><th>Description</th><th>Source</th><th class="right">Amount</th></tr></thead><tbody>';
     json.data.forEach(r => {
       const ac = r.net_amount<0?'red':'green';
-      t += `<tr><td style="font-family:'DM Mono',monospace;font-size:11px">${r.transaction_date}</td><td class="muted">${eh(r.reference)}</td><td>${eh(r.description)}</td><td class="muted">${r.source}</td><td class="right ${ac}">${fv(r.net_amount)}</td></tr>`;
+      t += `<tr><td style="font-family:'DM Mono',monospace;font-size:12px">${r.transaction_date}</td><td class="muted">${eh(r.reference)}</td><td>${eh(r.description)}</td><td class="muted">${r.source}</td><td class="right ${ac}">${fv(r.net_amount)}</td></tr>`;
     });
     t += '</tbody></table>';
     inner.innerHTML = t;
