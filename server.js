@@ -2,8 +2,16 @@
 const express=require('express'),session=require('express-session'),path=require('path'),{BigQuery}=require('@google-cloud/bigquery'),NodeCache=require('node-cache');
 const app=express(),bq=new BigQuery({projectId:'project-aa7ee149-5e29-4eb4-8bc'}),cache=new NodeCache({stdTTL:600});
 const PORT=process.env.PORT||8080,USERS={pete:'pete'};
-app.use(express.json());app.use(express.urlencoded({extended:true}));
-app.use(session({secret:process.env.SESSION_SECRET||'fixmart-mfg-pl-2026',resave:false,saveUninitialized:false,cookie:{maxAge:8*60*60*1000}}));
+
+app.set('trust proxy',1);
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+app.use(session({
+  secret:process.env.SESSION_SECRET||'fixmart-mfg-pl-2026',
+  resave:true,
+  saveUninitialized:false,
+  cookie:{maxAge:8*60*60*1000,secure:false,sameSite:'lax'}
+}));
 app.use(express.static(path.join(__dirname,'public')));
 
 function auth(req,res,next){
@@ -12,7 +20,19 @@ function auth(req,res,next){
   res.redirect('/login.html');
 }
 
-app.post('/login',(req,res)=>{const{username,password}=req.body;if(USERS[username]===password){req.session.user=username;res.redirect('/');}else res.redirect('/login.html?error=1');});
+app.post('/login',(req,res)=>{
+  const{username,password}=req.body;
+  if(USERS[username]===password){
+    req.session.user=username;
+    req.session.save(err=>{
+      if(err)console.error('Session save error:',err);
+      res.redirect('/');
+    });
+  } else {
+    res.redirect('/login.html?error=1');
+  }
+});
+
 app.get('/logout',(req,res)=>{req.session.destroy();res.redirect('/login.html');});
 
 const DS='`project-aa7ee149-5e29-4eb4-8bc.fixmart_bi.vw_manufacturing_pl`';
