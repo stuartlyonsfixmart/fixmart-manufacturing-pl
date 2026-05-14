@@ -79,24 +79,33 @@
   .pl-total-row td.red { color: var(--red); }
   .pl-total-row td.green { color: var(--green); }
   .pl-total-row td.total-col { background: #f0f0ee; border-left: 2px solid var(--border); font-size: 16px; }
-  /* Gross profit row — highlighted */
-  .pl-gp-row td { padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; border-top: 2px solid var(--lime-dark); border-bottom: 2px solid var(--lime-dark); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; white-space: nowrap; background: #f5ffe0; }
-  .pl-gp-row td.label { text-align: left; position: sticky; left: 0; background: #f5ffe0; z-index: 1; color: var(--lime-dark); }
-  .pl-gp-row td.red { color: var(--red); }
-  .pl-gp-row td.green { color: var(--green); }
-  .pl-gp-row td.total-col { background: #edfaca; border-left: 2px solid var(--border); font-size: 16px; }
-  .drill-arrow { color: #ccc; font-size: 9px; margin-left: 4px; }
-  .drill-row { display: none; background: #fafffe; }
+  /* Gross profit + Net Result — same highlighted style */
+  .pl-gp-row td, .pl-net-row td { padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; border-top: 2px solid var(--lime-dark); border-bottom: 2px solid var(--lime-dark); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; white-space: nowrap; background: #f5ffe0; }
+  .pl-gp-row td.label, .pl-net-row td.label { text-align: left; position: sticky; left: 0; background: #f5ffe0; z-index: 1; color: var(--lime-dark); }
+  .pl-gp-row td.red, .pl-net-row td.red { color: var(--red); }
+  .pl-gp-row td.green, .pl-net-row td.green { color: var(--green); }
+  .pl-gp-row td.total-col, .pl-net-row td.total-col { background: #edfaca; border-left: 2px solid var(--border); font-size: 16px; }
+  .pl-net-row td { border-top: 3px solid var(--black); border-bottom: 3px solid var(--black); background: #f0f8e0; }
+  .pl-net-row td.label { background: #f0f8e0; color: var(--black); }
+  .pl-net-row td.total-col { background: #e5f5d0; }
+  /* Drill-down — monthly grouped layout */
+  .drill-row { display: none; }
   .drill-row.open { display: table-row; }
-  .drill-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .drill-table thead { background: #f0f8e8; }
-  .drill-table thead th { padding: 7px 14px 7px 32px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; color: var(--lime-dark); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid #d8edb0; }
-  .drill-table thead th.right { text-align: right; }
-  .drill-table tbody tr { border-bottom: 1px solid #f0f0ee; }
-  .drill-table td { padding: 8px 14px 8px 32px; font-size: 13px; }
-  .drill-table td.right { text-align: right; font-family: 'DM Mono', monospace; }
-  .drill-table td.muted { color: var(--muted); font-size: 12px; }
-  .drill-loading { padding: 16px 32px; color: var(--muted); font-size: 13px; display: flex; align-items: center; gap: 8px; }
+  .drill-wrap { background: #fafffe; border-bottom: 1px solid var(--border); overflow-x: auto; }
+  .drill-months { display: flex; gap: 0; min-width: 100%; }
+  .drill-month-col { flex: 1; min-width: 160px; border-right: 1px solid #e8f5d0; }
+  .drill-month-col:last-child { border-right: none; }
+  .drill-month-hdr { background: #f0f8e8; padding: 6px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: var(--lime-dark); text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid #d8edb0; }
+  .drill-month-empty { padding: 8px 12px; color: #ccc; font-size: 12px; font-style: italic; }
+  .drill-txn { padding: 7px 12px; border-bottom: 1px solid #f0f0ee; font-size: 12px; }
+  .drill-txn:last-child { border-bottom: none; }
+  .drill-txn-desc { color: var(--black); font-weight: 500; line-height: 1.3; }
+  .drill-txn-ref { color: var(--muted); font-size: 11px; margin-top: 1px; }
+  .drill-txn-amt { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 700; margin-top: 3px; }
+  .drill-txn-amt.red { color: var(--red); }
+  .drill-txn-amt.green { color: var(--green); }
+  .drill-loading { padding: 16px 20px; color: var(--muted); font-size: 13px; display: flex; align-items: center; gap: 8px; }
+  .drill-arrow { color: #ccc; font-size: 9px; margin-left: 4px; }
   .tip { position: relative; display: inline-block; }
   .tip-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: #ddd; color: #666; font-size: 9px; font-weight: 700; margin-left: 5px; cursor: default; font-family: sans-serif; vertical-align: middle; }
   .tip-box { display: none; position: absolute; left: 20px; top: -4px; background: #1a1a1a; color: #fff; font-size: 12px; font-family: 'Barlow', sans-serif; font-weight: 400; padding: 8px 11px; border-radius: 4px; width: 280px; z-index: 99; line-height: 1.5; white-space: normal; }
@@ -179,6 +188,7 @@
 <script>
 let summaryData = [], linesData = [];
 let openDrills = {}, openGroups = {};
+let currentMonths = []; // track visible months for drill alignment
 
 const COST_GROUPS = [
   { id: 'cos', label: 'Cost of Sales', lines: ['Materials consumed', 'Aylesford - Purchases (Mfg)', 'Closing raw materials stock value'] },
@@ -198,6 +208,7 @@ function toMonthStr(d) { return d.toISOString().slice(0,7); }
 function firstDay(ym) { return ym + '-01'; }
 function lastDay(ym) { const [y,m] = ym.split('-').map(Number); return new Date(y,m,0).toISOString().slice(0,10); }
 function fmtMonth(ym) { const [y,m] = ym.slice(0,7).split('-'); const ms = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return ms[parseInt(m,10)-1] + ' ' + y.slice(2); }
+function txnMonth(dateStr) { return dateStr ? dateStr.slice(0,7) : ''; }
 
 function setMonths(n) {
   const to = new Date(), from = new Date();
@@ -263,6 +274,8 @@ function renderPL(sd, ed) {
   const monthSet = new Set();
   linesData.forEach(r => { if(r.period_date) monthSet.add(r.period_date.slice(0,7)); });
   const months = Array.from(monthSet).sort();
+  currentMonths = months;
+
   const byLabel = {};
   linesData.forEach(r => {
     const lbl = r.line_label, mo = r.period_date ? r.period_date.slice(0,7) : '';
@@ -295,7 +308,6 @@ function renderPL(sd, ed) {
   const totNet = totRev + totCost;
   const numCols = months.length + 2;
 
-  // Pre-calculate COS totals for Gross Profit row
   const cosGroup = groupedLines.find(g=>g.id==='cos');
   const cosByMonth = {};
   months.forEach(mo => { cosByMonth[mo] = cosGroup ? cosGroup.lines.reduce((s,[,v])=>s+(v.months[mo]||0),0) : 0; });
@@ -315,7 +327,7 @@ function renderPL(sd, ed) {
     h += `<td class="label">${eh(lbl)}${tip} <span class="drill-arrow">&#9654;</span></td>`;
     months.forEach(mo => { h += `<td class="green">${v.months[mo] ? fv(v.months[mo]) : '\u2014'}</td>`; });
     h += `<td class="total-col green">${fv(v.total)}</td></tr>`;
-    h += `<tr class="drill-row" id="dr-${id}"><td colspan="${numCols}" style="padding:0"><div id="di-${id}"></div></td></tr>`;
+    h += `<tr class="drill-row" id="dr-${id}"><td colspan="${numCols}" style="padding:0"><div class="drill-wrap" id="di-${id}"></div></td></tr>`;
   });
   h += `<tr class="pl-total-row"><td class="label">Total Revenue</td>`;
   months.forEach(mo => { h += `<td class="green">${fv(totRevByMonth[mo]||0)}</td>`; });
@@ -343,10 +355,9 @@ function renderPL(sd, ed) {
       h += `<td class="label">${eh(lbl)}${tip} <span class="drill-arrow">&#9654;</span></td>`;
       months.forEach(mo => { const val=v.months[mo]||0; h += `<td class="${val<0?'red':'green'}">${val?fv(val):'\u2014'}</td>`; });
       h += `<td class="total-col ${lineCls}">${fv(v.total)}</td></tr>`;
-      h += `<tr class="drill-row group-child-${gid}" id="dr-${id}" style="display:none"><td colspan="${numCols}" style="padding:0"><div id="di-${id}"></div></td></tr>`;
+      h += `<tr class="drill-row group-child-${gid}" id="dr-${id}" style="display:none"><td colspan="${numCols}" style="padding:0"><div class="drill-wrap" id="di-${id}"></div></td></tr>`;
     });
 
-    // Insert Gross Profit row immediately after COS group
     if (grp.id === 'cos') {
       const gpByMonth = {};
       months.forEach(mo => { gpByMonth[mo] = (totRevByMonth[mo]||0) + (cosByMonth[mo]||0); });
@@ -361,11 +372,13 @@ function renderPL(sd, ed) {
   h += `<tr class="pl-total-row"><td class="label">Total Costs</td>`;
   months.forEach(mo => { h += `<td class="red">${fv(totCostByMonth[mo]||0)}</td>`; });
   h += `<td class="total-col red">${fv(totCost)}</td></tr>`;
+
   const netByMonth = {};
   months.forEach(mo => { netByMonth[mo] = (totRevByMonth[mo]||0) + (totCostByMonth[mo]||0); });
-  h += `<tr class="pl-total-row" style="background:#f8f8f6"><td class="label">Net Result</td>`;
+  h += `<tr class="pl-net-row"><td class="label">Net Result</td>`;
   months.forEach(mo => { const v=netByMonth[mo]||0; h += `<td class="${v>=0?'green':'red'}">${fv(v)}</td>`; });
   h += `<td class="total-col ${totNet>=0?'green':'red'}">${fv(totNet)}</td></tr>`;
+
   h += '</tbody></table></div>';
   document.getElementById('main-content').innerHTML = h;
 }
@@ -377,7 +390,7 @@ function toggleGroup(gid) {
   if (chev) chev.classList.toggle('open', isOpen);
   document.querySelectorAll('.group-child-'+gid).forEach(row => {
     row.style.display = isOpen ? 'table-row' : 'none';
-    if (!isOpen) row.classList.remove('open');
+    if (!isOpen) { openDrills[row.id] = false; }
   });
 }
 
@@ -385,7 +398,11 @@ async function toggleDrill(lbl, sd, ed, id) {
   const row = document.getElementById('dr-'+id);
   const inner = document.getElementById('di-'+id);
   if (!row) return;
-  if (openDrills[id]) { row.style.display = 'none'; openDrills[id] = false; return; }
+  if (openDrills[id]) {
+    row.style.display = 'none';
+    openDrills[id] = false;
+    return;
+  }
   row.style.display = 'table-row';
   openDrills[id] = true;
   inner.innerHTML = '<div class="drill-loading"><div class="spinner"></div> Loading transactions...</div>';
@@ -394,12 +411,38 @@ async function toggleDrill(lbl, sd, ed, id) {
     const json = await res.json();
     if (!json.success) throw new Error(json.error);
     if (json.data.length===0) { inner.innerHTML='<div class="drill-loading">No transactions found.</div>'; return; }
-    let t = '<table class="drill-table"><thead><tr><th>Date</th><th>Reference</th><th>Description</th><th>Source</th><th class="right">Amount</th></tr></thead><tbody>';
+
+    // Group transactions by month
+    const byMonth = {};
     json.data.forEach(r => {
-      const ac = r.net_amount<0?'red':'green';
-      t += `<tr><td style="font-family:'DM Mono',monospace;font-size:12px">${r.transaction_date}</td><td class="muted">${eh(r.reference)}</td><td>${eh(r.description)}</td><td class="muted">${r.source}</td><td class="right ${ac}">${fv(r.net_amount)}</td></tr>`;
+      const mo = txnMonth(r.transaction_date);
+      if (!byMonth[mo]) byMonth[mo] = [];
+      byMonth[mo].push(r);
     });
-    t += '</tbody></table>';
+
+    // Show columns aligned with the main table months
+    let t = '<div class="drill-months">';
+    currentMonths.forEach(mo => {
+      const txns = byMonth[mo] || [];
+      t += `<div class="drill-month-col">`;
+      t += `<div class="drill-month-hdr">${fmtMonth(mo)}</div>`;
+      if (txns.length === 0) {
+        t += `<div class="drill-month-empty">No transactions</div>`;
+      } else {
+        txns.forEach(r => {
+          const ac = r.net_amount<0?'red':'green';
+          const desc = eh(r.description || r.reference || '—');
+          const ref = r.reference && r.description && r.reference !== r.description ? `<div class="drill-txn-ref">${eh(r.reference)}</div>` : '';
+          t += `<div class="drill-txn">`;
+          t += `<div class="drill-txn-desc">${desc}</div>`;
+          t += ref;
+          t += `<div class="drill-txn-amt ${ac}">${fv(r.net_amount)}</div>`;
+          t += `</div>`;
+        });
+      }
+      t += `</div>`;
+    });
+    t += '</div>';
     inner.innerHTML = t;
   } catch(err) {
     inner.innerHTML = `<div class="drill-loading" style="color:#dc2626">Error: ${err.message}</div>`;
