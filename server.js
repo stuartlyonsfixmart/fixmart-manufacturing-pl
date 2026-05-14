@@ -13,13 +13,14 @@ const cache = new NodeCache({ stdTTL: 600 });
 const PORT = process.env.PORT || 8080;
 const USERS = { pete: 'pete' };
 
+app.set('trust proxy', 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: process.env.SESSION_SECRET || 'fixmart-mfg-pl-2026',
-  resave: false,
+  resave: true,
   saveUninitialized: false,
-  cookie: { maxAge: 8 * 60 * 60 * 1000 }
+  cookie: { maxAge: 8 * 60 * 60 * 1000, secure: false, sameSite: 'lax' }
 }));
 
 app.get('/login.html', (req, res) => {
@@ -32,6 +33,10 @@ app.get('/logo.js', (req, res) => {
 
 function requireAuth(req, res, next) {
   if (req.session && req.session.user) return next();
+  // API routes get JSON 401; page routes get redirect
+  if (req.path.startsWith('/api/')) {
+    return res.status(401).json({ success: false, error: 'session_expired' });
+  }
   res.redirect('/login.html');
 }
 
@@ -39,7 +44,7 @@ app.post('/login', (req, res) => {
   const { username, password } = req.body;
   if (USERS[username] && USERS[username] === password) {
     req.session.user = username;
-    res.redirect('/');
+    req.session.save(err => { if (err) console.error(err); res.redirect('/'); });
   } else {
     res.redirect('/login.html?error=1');
   }
@@ -100,7 +105,7 @@ app.get('/api/detail', requireAuth, async (req, res) => {
   if (cached) return res.json({ success: true, data: cached, fromCache: true });
   try {
     const [rows] = await bq.query({
-      query: `SELECT transaction_date, reference, description, nominal, source, ROUND(net_amount,2) AS net_amount FROM ${DS} WHERE period_date BETWEEN @startDate AND @endDate AND line_label=@lineLabel ORDER BY transaction_date DESC, net_amount`,
+      query: `SELECT transaction_date, reference, description, nominal, source, ROUND(net_amount,2) AS net_amount FROM ${DS} WHERE period_date BETWEEN @startDate AND @endDate AND line_label=@lineLabel ORDER BY transaction_date, net_amount`,
       params: { startDate, endDate, lineLabel }, location: 'europe-west2'
     });
     const data = rows.map(r => ({
