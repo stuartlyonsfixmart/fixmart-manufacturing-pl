@@ -1,9 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="/logo.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fixmart &mdash; Manufacturing P&amp;L</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lime: #9ACD00; --lime-dark: #7aaa00;
+    --black: #1a1a1a; --white: #fff;
+    --offwhite: #f5f5f3; --border: #e0e0e0;
+    --muted: #666; --surface: #fff;
+    --red: #dc2626; --amber: #d97706; --green: #16a34a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Barlow', sans-serif; background: var(--offwhite); color: var(--black); }
+  .header { background: var(--black); padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--lime); }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo-img { height: 36px; width: auto; background: #fff; border-radius: 4px; padding: 4px 8px; }
+  .header-div { width: 1px; height: 26px; background: rgba(255,255,255,0.15); }
+  .header-title { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .cache-badge { background: rgba(154,205,0,0.15); border: 1px solid rgba(154,205,0,0.3); color: var(--lime); font-size: 10px; font-weight: 700; font-family: 'Barlow Condensed', sans-serif; padding: 3px 9px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; display: none; }
+  .cache-badge.show { display: inline; }
+  .last-updated { color: rgba(255,255,255,0.3); font-size: 11px; font-family: 'DM Mono', monospace; }
+  .logout-btn { color: rgba(255,255,255,0.35); text-decoration: none; font-size: 12px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.15s; }
+  .logout-btn:hover { color: rgba(255,255,255,0.7); }
+  .main { padding: 16px 24px; max-width: 100%; margin: 0 auto; }
+  .filters-bar { background: var(--black); border-radius: 6px; padding: 10px 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
+  .filter-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
+  .filter-group { display: flex; align-items: center; gap: 7px; }
+  .filter-div { width: 1px; height: 20px; background: rgba(255,255,255,0.1); }
+  .toggle { display: flex; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; }
+  .toggle-btn { padding: 4px 14px; font-size: 13px; font-weight: 700; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.05em; cursor: pointer; color: rgba(255,255,255,0.45); background: transparent; border: none; }
+  .toggle-btn.active { background: var(--lime); color: var(--black); }
+  .filter-select { font-family: 'Barlow', sans-serif; font-size: 13px; color: #fff; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; padding: 4px 9px; cursor: pointer; outline: none; color-scheme: dark; }
+  .filter-select option { background: #333; }
+  .apply-btn { padding: 5px 16px; font-size: 13px; font-weight: 700; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.05em; cursor: pointer; background: var(--lime); color: var(--black); border: none; border-radius: 4px; }
+  .apply-btn:hover { background: var(--lime-dark); }
+  .summary-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px 20px; }
+  .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 800; line-height: 1; }
+  .stat-value.red { color: var(--red); }
+  .stat-value.green { color: var(--green); }
+  .stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .table-bar { background: var(--black); border-radius: 6px 6px 0 0; padding: 9px 16px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+  .table-bar-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.07em; }
+  .table-count { font-size: 12px; color: rgba(255,255,255,0.45); font-family: 'DM Mono', monospace; }
+  .pl-table-wrap { background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; overflow-x: auto; }
+  .pl-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .pl-table thead { background: #f8f8f6; }
+  .pl-table thead th { padding: 8px 12px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .pl-table thead th.left { text-align: left; min-width: 220px; position: sticky; left: 0; background: #f8f8f6; z-index: 2; }
+  .pl-table thead th.total-col { background: #f0f0ee; color: var(--black); border-left: 2px solid var(--border); }
+  .pl-section-header td { background: #e8e8e6; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #444; padding: 6px 12px; border-bottom: 1px solid var(--border); }
+  .pl-group-row { background: #f4f4f2; cursor: pointer; border-bottom: 1px solid var(--border); }
+  .pl-group-row:hover { background: #eeeeeb; }
+  .pl-group-row td { padding: 9px 12px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+  .pl-group-row td.label { text-align: left; position: sticky; left: 0; background: #f4f4f2; z-index: 1; }
+  .pl-group-row:hover td.label { background: #eeeeeb; }
+  .pl-group-row td.red { color: var(--red); }
+  .pl-group-row td.green { color: var(--green); }
+  .pl-group-row td.total-col { background: #eeeeed; border-left: 2px solid var(--border); font-size: 15px; }
+  .group-chevron { font-size: 9px; color: #999; margin-right: 6px; display: inline-block; transition: transform 0.2s; }
+  .group-chevron.open { transform: rotate(90deg); }
+  .pl-row { border-bottom: 1px solid #f5f5f3; cursor: pointer; transition: background 0.1s; }
+  .pl-row:hover { background: #fafaf8; }
+  .pl-row td { padding: 8px 12px; padding-left: 28px; text-align: right; font-family: 'DM Mono', monospace; font-size: 12px; white-space: nowrap; }
+  .pl-row td.label { text-align: left; font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 400; position: sticky; left: 0; background: #fff; z-index: 1; padding-left: 28px; }
+  .pl-row:hover td.label { background: #fafaf8; }
+  .pl-row td.red { color: var(--red); }
+  .pl-row td.green { color: var(--green); }
+  .pl-row td.total-col { background: #fafaf8; border-left: 2px solid var(--border); font-weight: 700; font-size: 13px; }
+  .pl-row:hover td.total-col { background: #f5f5f0; }
+  .pl-total-row td { padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; border-top: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; white-space: nowrap; }
+  .pl-total-row td.label { text-align: left; position: sticky; left: 0; background: #fff; z-index: 1; }
+  .pl-total-row td.red { color: var(--red); }
+  .pl-total-row td.green { color: var(--green); }
+  .pl-total-row td.total-col { background: #f0f0ee; border-left: 2px solid var(--border); font-size: 16px; }
+  .pl-gp-row td, .pl-net-row td { padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; border-top: 2px solid var(--lime-dark); border-bottom: 2px solid var(--lime-dark); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; white-space: nowrap; background: #f5ffe0; }
+  .pl-gp-row td.label, .pl-net-row td.label { text-align: left; position: sticky; left: 0; background: #f5ffe0; z-index: 1; color: var(--lime-dark); }
+  .pl-gp-row td.red, .pl-net-row td.red { color: var(--red); }
+  .pl-gp-row td.green, .pl-net-row td.green { color: var(--green); }
+  .pl-gp-row td.total-col, .pl-net-row td.total-col { background: #edfaca; border-left: 2px solid var(--border); font-size: 16px; }
+  .pl-net-row td { border-top: 3px solid var(--black); border-bottom: 3px solid var(--black); background: #f0f8e0; }
+  .pl-net-row td.label { background: #f0f8e0; color: var(--black); }
+  .pl-net-row td.total-col { background: #e5f5d0; }
+  .drill-txn-row { background: #f4fff4; border-bottom: 1px solid #eaf5ea; }
+  .drill-txn-row td { padding: 5px 12px; text-align: right; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); white-space: nowrap; vertical-align: top; }
+  .drill-txn-row td.label { text-align: left; font-family: 'Barlow', sans-serif; font-size: 11px; font-weight: 400; color: #444; position: sticky; left: 0; background: #f4fff4; z-index: 1; padding-left: 40px; white-space: normal; line-height: 1.3; }
+  .drill-txn-row td.red { color: var(--red); }
+  .drill-txn-row td.green { color: var(--green); }
+  .drill-txn-row td.total-col { background: #edfaf0; border-left: 2px solid var(--border); }
+  .drill-arrow { color: #ccc; font-size: 9px; margin-left: 4px; }
+  .tip { position: relative; display: inline-block; }
+  .tip-icon { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: #ddd; color: #666; font-size: 9px; font-weight: 700; margin-left: 5px; cursor: default; font-family: sans-serif; vertical-align: middle; }
+  .tip-box { display: none; position: absolute; left: 20px; top: -4px; background: #1a1a1a; color: #fff; font-size: 12px; font-family: 'Barlow', sans-serif; font-weight: 400; padding: 8px 11px; border-radius: 4px; width: 280px; z-index: 99; line-height: 1.5; white-space: normal; }
+  .tip:hover .tip-box { display: block; }
+  .spinner { width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--lime); border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-right: 6px; }
+  .loading-full { display: flex; align-items: center; justify-content: center; height: 160px; font-size: 14px; color: var(--muted); gap: 10px; background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; }
+  .spinner-lg { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--lime); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <img class="logo-img" id="logo-img" src="" alt="Fixmart">
+    <div class="header-div"></div>
+    <div class="header-title">Manufacturing P&amp;L</div>
+  </div>
+  <div class="header-right">
+    <span class="cache-badge" id="cache-badge">CACHED</span>
+    <span class="last-updated" id="last-loaded"></span>
+    <a href="/logout" class="logout-btn">Sign Out</a>
+  </div>
+</div>
+
+<div class="main">
+  <div class="filters-bar">
+    <div class="filter-group">
+      <span class="filter-label">Period</span>
+      <div class="toggle">
+        <button class="toggle-btn" id="btn-3m" onclick="setMonths(3)">3m</button>
+        <button class="toggle-btn active" id="btn-6m" onclick="setMonths(6)">6m</button>
+        <button class="toggle-btn" id="btn-12m" onclick="setMonths(12)">12m</button>
+        <button class="toggle-btn" id="btn-all" onclick="setAll()">All</button>
+      </div>
+    </div>
+    <div class="filter-div"></div>
     <div class="filter-group">
       <span class="filter-label">From</span>
-      <input type="month" class="filter-select" id="month-from" style="cursor:pointer;color-scheme:dark">
+      <input type="month" class="filter-select" id="month-from" style="cursor:pointer">
     </div>
     <div class="filter-group">
       <span class="filter-label">To</span>
-      <input type="month" class="filter-select" id="month-to" style="cursor:pointer;color-scheme:dark">
+      <input type="month" class="filter-select" id="month-to" style="cursor:pointer">
     </div>
-    <button class="toggle-btn" id="btn-apply" onclick="applyCustomRange()" style="background:var(--lime);color:var(--black);border-radius:4px;padding:4px 14px">Apply</button>
+    <button class="apply-btn" onclick="applyCustomRange()">Apply</button>
+  </div>
+
+  <div class="summary-grid">
+    <div class="stat-card">
+      <div class="stat-label">Revenue</div>
+      <div class="stat-value green" id="card-revenue">&mdash;</div>
+      <div class="stat-sub">internal transfer to engineering</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Costs</div>
+      <div class="stat-value red" id="card-costs">&mdash;</div>
+      <div class="stat-sub">all Aylesford cost lines</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Net Result</div>
+      <div class="stat-value" id="card-net">&mdash;</div>
+      <div class="stat-sub">revenue less all costs</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg Monthly Result</div>
+      <div class="stat-value" id="card-avg">&mdash;</div>
+      <div class="stat-sub">over selected period</div>
+    </div>
+  </div>
+
+  <div class="table-bar">
+    <div class="table-bar-title">P&amp;L Detail &mdash; click group rows to expand, line rows to drill into transactions</div>
+    <div class="table-count" id="table-period"></div>
+  </div>
+  <div id="main-content">
+    <div class="loading-full"><div class="spinner-lg"></div> Loading from BigQuery...</div>
+  </div>
+</div>
+
+<script>
+let summaryData = [], linesData = [];
+let openDrills = {}, openGroups = {};
+let currentMonths = [];
+
+const COST_GROUPS = [
+  { id: 'cos', label: 'Cost of Sales', lines: ['Materials consumed', 'Aylesford - Purchases (Mfg)', 'Closing raw materials stock value'] },
+  { id: 'people', label: 'People', lines: ['Salaries & NIC - Aylesford staff', 'Agency staff', 'Aylesford - Staff Welfare/Stationery'] },
+  { id: 'premises', label: 'Premises', lines: ['Aylesford - Rent', 'Aylesford - Rates', 'Aylesford - Insurance', 'Aylesford - Heat & Light', 'Aylesford - Waste disposal', 'Aylesford - Telephone and Broadband', 'Aylesford - Premises Maintenance', 'Aylesford - Equipment & Hire', 'Aylesford - Equipment Maintenance'] },
+  { id: 'other', label: 'Other', lines: [] }
+];
+
+const LINE_TOOLTIPS = {
+  'Assembly Contribution': 'The price at which Fixmart transfers goods and assembly services to the engineering operation (Fixmart Engineering, customer FIX105). This is the internal transfer value booked in OrderWise — it is not a market price or cost recovery figure.',
+  'Materials consumed': 'Monthly reposition journal (nominal 5020) representing raw materials consumed in production during the period.',
+  'Closing raw materials stock value': 'Credit entry (nominal 5206) representing the value of raw materials purchased but not yet consumed. Offsets materials purchased to give net materials used.',
+  'Agency staff': 'Temporary agency labour costs (nominal 6035), separated from permanent payroll.'
+};
+
+function toMonthStr(d) { return d.toISOString().slice(0,7); }
+function firstDay(ym) { return ym + '-01'; }
+function lastDay(ym) { const [y,m] = ym.split('-').map(Number); return new Date(y,m,0).toISOString().slice(0,10); }
+function fmtMonth(ym) { const [y,m] = ym.slice(0,7).split('-'); const ms = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return ms[parseInt(m,10)-1] + ' ' + y.slice(2); }
+function txnMonth(d) { return d ? d.slice(0,7) : ''; }
+
+function setMonths(n) {
+  const to = new Date(), from = new Date();
+  from.setMonth(from.getMonth()-n+1); from.setDate(1);
+  document.getElementById('month-from').value = toMonthStr(from);
+  document.getElementById('month-to').value = toMonthStr(to);
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+n+'m').classList.add('active');
+  loadData();
+}
+function setAll() {
+  document.getElementById('month-from').value = '2025-01';
+  document.getElementById('month-to').value = toMonthStr(new Date());
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-all').classList.add('active');
+  loadData();
+}
+function applyCustomRange() {
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  loadData();
+}
+function initDates() {
+  const to = new Date(), from = new Date();
+  from.setMonth(from.getMonth()-5); from.setDate(1);
+  document.getElementById('month-from').value = toMonthStr(from);
+  document.getElementById('month-to').value = toMonthStr(to);
+}
+
+async function loadData() {
+  const fm = document.getElementById('month-from').value;
+  const tm = document.getElementById('month-to').value;
+  if (!fm || !tm) return;
+  const sd = firstDay(fm), ed = lastDay(tm);
+  document.getElementById('main-content').innerHTML = '<div class="loading-full"><div class="spinner-lg"></div> Loading from BigQuery...</div>';
+  document.getElementById('table-period').textContent = '';
+  ['card-revenue','card-costs','card-net','card-avg'].forEach(id => document.getElementById(id).textContent = '\u2014');
+  openDrills = {}; openGroups = {};
+  try {
+    const [sr, lr] = await Promise.all([fetch(`/api/summary?startDate=${sd}&endDate=${ed}`), fetch(`/api/lines?startDate=${sd}&endDate=${ed}`)]);
+    const sj = await sr.json(), lj = await lr.json();
+    if (!sj.success) throw new Error(sj.error);
+    if (!lj.success) throw new Error(lj.error);
+    document.getElementById('cache-badge').classList.toggle('show', !!(sj.fromCache||lj.fromCache));
+    document.getElementById('last-loaded').textContent = 'Updated ' + new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    summaryData = sj.data; linesData = lj.data;
+    const totRev = summaryData.reduce((s,r)=>s+(r.revenue||0),0);
+    const totCost = summaryData.reduce((s,r)=>s+(r.costs||0),0);
+    const totNet = summaryData.reduce((s,r)=>s+(r.net_result||0),0);
+    const avgNet = summaryData.length ? totNet/summaryData.length : 0;
+    document.getElementById('card-revenue').textContent = fmt(totRev);
+    document.getElementById('card-costs').textContent = fmt(Math.abs(totCost));
+    const ne = document.getElementById('card-net');
+    ne.textContent = (totNet<0?'-':'') + fmt(Math.abs(totNet));
+    ne.className = 'stat-value ' + (totNet>=0?'green':'red');
+    const ae = document.getElementById('card-avg');
+    ae.textContent = (avgNet<0?'-':'') + fmt(Math.abs(avgNet));
+    ae.className = 'stat-value ' + (avgNet>=0?'green':'red');
+    document.getElementById('table-period').textContent = fm + ' to ' + tm;
+    renderPL(sd, ed);
+  } catch(err) {
+    document.getElementById('main-content').innerHTML = `<div class="loading-full" style="color:#dc2626">Error: ${err.message}</div>`;
+  }
+}
+
+function renderPL(sd, ed) {
+  const monthSet = new Set();
+  linesData.forEach(r => { if(r.period_date) monthSet.add(r.period_date.slice(0,7)); });
+  const months = Array.from(monthSet).sort();
+  currentMonths = months;
+  const byLabel = {};
+  linesData.forEach(r => {
+    const lbl = r.line_label, mo = r.period_date ? r.period_date.slice(0,7) : '';
+    if (!byLabel[lbl]) byLabel[lbl] = { section: r.section, months: {}, total: 0 };
+    byLabel[lbl].months[mo] = (byLabel[lbl].months[mo] || 0) + r.total;
+    byLabel[lbl].total += r.total;
+  });
+  const revLines = Object.entries(byLabel).filter(([,v])=>v.section==='Revenue').sort((a,b)=>b[1].total-a[1].total);
+  const allCostLines = Object.entries(byLabel).filter(([,v])=>v.section==='Cost');
+  const assignedLabels = new Set();
+  const groupedLines = COST_GROUPS.map(g => {
+    const lines = g.lines.length > 0
+      ? g.lines.map(lbl => { const e = allCostLines.find(([l])=>l===lbl); if(e) assignedLabels.add(lbl); return e; }).filter(Boolean)
+      : allCostLines.filter(([lbl]) => !assignedLabels.has(lbl));
+    return { ...g, lines };
+  });
+  allCostLines.forEach(([lbl]) => {
+    if (!assignedLabels.has(lbl)) {
+      const og = groupedLines.find(g=>g.id==='other');
+      if (og && !og.lines.find(([l])=>l===lbl)) og.lines.push(allCostLines.find(([l])=>l===lbl));
+    }
+  });
+  const totRevByMonth = {}, totCostByMonth = {};
+  months.forEach(mo => {
+    totRevByMonth[mo] = revLines.reduce((s,[,v])=>s+(v.months[mo]||0),0);
+    totCostByMonth[mo] = allCostLines.reduce((s,[,v])=>s+(v.months[mo]||0),0);
+  });
+  const totRev = revLines.reduce((s,[,v])=>s+v.total,0);
+  const totCost = allCostLines.reduce((s,[,v])=>s+v.total,0);
+  const totNet = totRev + totCost;
+  const numCols = months.length + 2;
+  const cosGroup = groupedLines.find(g=>g.id==='cos');
+  const cosByMonth = {};
+  months.forEach(mo => { cosByMonth[mo] = cosGroup ? cosGroup.lines.reduce((s,[,v])=>s+(v.months[mo]||0),0) : 0; });
+  const cosTotal = cosGroup ? cosGroup.lines.reduce((s,[,v])=>s+v.total,0) : 0;
+
+  let h = '<div class="pl-table-wrap"><table class="pl-table"><thead><tr>';
+  h += '<th class="left">Line</th>';
+  months.forEach(mo => { h += `<th>${fmtMonth(mo)}</th>`; });
+  h += '<th class="total-col">Total</th></tr></thead><tbody>';
+
+  h += `<tr class="pl-section-header"><td colspan="${numCols}">Revenue</td></tr>`;
+  revLines.forEach(([lbl,v]) => {
+    const id = eid(lbl);
+    const tip = LINE_TOOLTIPS[lbl] ? `<span class="tip"><span class="tip-icon">i</span><span class="tip-box">${LINE_TOOLTIPS[lbl]}</span></span>` : '';
+    h += `<tr class="pl-row" id="plr-${id}" onclick="toggleDrill('${ejs(lbl)}','${sd}','${ed}','${id}')">`;
+    h += `<td class="label">${eh(lbl)}${tip} <span class="drill-arrow">&#9654;</span></td>`;
+    months.forEach(mo => { h += `<td class="green">${v.months[mo] ? fv(v.months[mo]) : '\u2014'}</td>`; });
+    h += `<td class="total-col green">${fv(v.total)}</td></tr>`;
+    h += `<tr id="dload-${id}" style="display:none"><td class="label" style="padding-left:40px;font-size:12px;color:#999" colspan="${numCols}"><span class="spinner"></span> Loading...</td></tr>`;
+  });
+  h += `<tr class="pl-total-row"><td class="label">Total Revenue</td>`;
+  months.forEach(mo => { h += `<td class="green">${fv(totRevByMonth[mo]||0)}</td>`; });
+  h += `<td class="total-col green">${fv(totRev)}</td></tr>`;
+
+  h += `<tr class="pl-section-header"><td colspan="${numCols}">Costs</td></tr>`;
+  groupedLines.forEach(grp => {
+    if (!grp.lines.length) return;
+    const grpTotal = grp.lines.reduce((s,[,v])=>s+v.total,0);
+    const grpByMonth = {};
+    months.forEach(mo => { grpByMonth[mo] = grp.lines.reduce((s,[,v])=>s+(v.months[mo]||0),0); });
+    const gid = 'grp_' + grp.id;
+    const isOpen = !!openGroups[gid];
+    const cls = grpTotal<0?'red':'green';
+    h += `<tr class="pl-group-row" onclick="toggleGroup('${gid}')">`;
+    h += `<td class="label"><span class="group-chevron${isOpen?' open':''}" id="chev-${gid}">&#9654;</span>${eh(grp.label)}</td>`;
+    months.forEach(mo => { const v=grpByMonth[mo]||0; h += `<td class="${v<0?'red':'green'}">${v?fv(v):'\u2014'}</td>`; });
+    h += `<td class="total-col ${cls}">${fv(grpTotal)}</td></tr>`;
+    grp.lines.forEach(([lbl,v]) => {
+      const id = eid(lbl);
+      const lineCls = v.total<0?'red':'green';
+      const tip = LINE_TOOLTIPS[lbl] ? `<span class="tip"><span class="tip-icon">i</span><span class="tip-box">${LINE_TOOLTIPS[lbl]}</span></span>` : '';
+      h += `<tr class="pl-row group-child-${gid}" id="plr-${id}" style="display:${isOpen?'table-row':'none'}" onclick="toggleDrill('${ejs(lbl)}','${sd}','${ed}','${id}')">`;
+      h += `<td class="label">${eh(lbl)}${tip} <span class="drill-arrow">&#9654;</span></td>`;
+      months.forEach(mo => { const val=v.months[mo]||0; h += `<td class="${val<0?'red':'green'}">${val?fv(val):'\u2014'}</td>`; });
+      h += `<td class="total-col ${lineCls}">${fv(v.total)}</td></tr>`;
+      h += `<tr id="dload-${id}" class="group-child-${gid}" style="display:none"><td class="label" style="padding-left:40px;font-size:12px;color:#999" colspan="${numCols}"><span class="spinner"></span> Loading...</td></tr>`;
+    });
+    if (grp.id === 'cos') {
+      const gpByMonth = {};
+      months.forEach(mo => { gpByMonth[mo] = (totRevByMonth[mo]||0) + (cosByMonth[mo]||0); });
+      const gpTotal = totRev + cosTotal;
+      const gpCls = gpTotal>=0?'green':'red';
+      h += `<tr class="pl-gp-row"><td class="label">Gross Profit</td>`;
+      months.forEach(mo => { const v=gpByMonth[mo]||0; h += `<td class="${v>=0?'green':'red'}">${fv(v)}</td>`; });
+      h += `<td class="total-col ${gpCls}">${fv(gpTotal)}</td></tr>`;
+    }
+  });
+
+  h += `<tr class="pl-total-row"><td class="label">Total Costs</td>`;
+  months.forEach(mo => { h += `<td class="red">${fv(totCostByMonth[mo]||0)}</td>`; });
+  h += `<td class="total-col red">${fv(totCost)}</td></tr>`;
+  const netByMonth = {};
+  months.forEach(mo => { netByMonth[mo] = (totRevByMonth[mo]||0) + (totCostByMonth[mo]||0); });
+  h += `<tr class="pl-net-row"><td class="label">Net Result</td>`;
+  months.forEach(mo => { const v=netByMonth[mo]||0; h += `<td class="${v>=0?'green':'red'}">${fv(v)}</td>`; });
+  h += `<td class="total-col ${totNet>=0?'green':'red'}">${fv(totNet)}</td></tr>`;
+  h += '</tbody></table></div>';
+  document.getElementById('main-content').innerHTML = h;
+}
+
+function toggleGroup(gid) {
+  openGroups[gid] = !openGroups[gid];
+  const isOpen = openGroups[gid];
+  const chev = document.getElementById('chev-'+gid);
+  if (chev) chev.classList.toggle('open', isOpen);
+  document.querySelectorAll('.group-child-'+gid).forEach(row => {
+    const rid = row.id ? row.id.replace('plr-','').replace('dload-','') : '';
+    if (!isOpen && openDrills[rid]) { removeDrillRows(rid); openDrills[rid] = false; }
+    row.style.display = isOpen ? 'table-row' : 'none';
+  });
+}
+
+function removeDrillRows(id) {
+  document.querySelectorAll(`.drill-inserted-${id}`).forEach(r => r.remove());
+}
+
+async function toggleDrill(lbl, sd, ed, id) {
+  const plRow = document.getElementById('plr-'+id);
+  const loadRow = document.getElementById('dload-'+id);
+  if (!plRow) return;
+  if (openDrills[id]) {
+    removeDrillRows(id);
+    if (loadRow) loadRow.style.display = 'none';
+    openDrills[id] = false;
+    return;
+  }
+  openDrills[id] = true;
+  if (loadRow) loadRow.style.display = 'table-row';
+  try {
+    const res = await fetch(`/api/detail?startDate=${sd}&endDate=${ed}&lineLabel=${encodeURIComponent(lbl)}`);
+    const json = await res.json();
+    if (!plRow.parentNode) return;
+    if (loadRow) loadRow.style.display = 'none';
+    if (json.error === 'session_expired') { window.location.href = '/login.html'; return; }
+    if (!json.success) throw new Error(json.error);
+    if (!json.data.length) { injectRow(plRow, `<td class="label" style="padding-left:40px;color:#999;font-size:12px" colspan="${currentMonths.length+2}">No transactions found</td>`, id); return; }
+    const byMonth = {};
+    json.data.forEach(r => { const mo = txnMonth(r.transaction_date); if (!byMonth[mo]) byMonth[mo] = []; byMonth[mo].push(r); });
+    const maxRows = Math.max(...currentMonths.map(mo => (byMonth[mo]||[]).length));
+    for (let i = 0; i < maxRows; i++) {
+      let cells = `<td class="label" style="padding-left:40px;background:#f4fff4"></td>`;
+      currentMonths.forEach(mo => {
+        const txns = byMonth[mo] || [];
+        if (i < txns.length) {
+          const r = txns[i];
+          const label = eh(r.description || r.reference || '\u2014');
+          const ac = r.net_amount<0?'red':'green';
+          cells += `<td class="${ac}" style="vertical-align:top;padding:5px 12px;font-size:11px;white-space:normal">${label}<br><span style="font-family:'DM Mono',monospace;font-weight:700">${fv(r.net_amount)}</span></td>`;
+        } else { cells += `<td style="background:#f4fff4"></td>`; }
+      });
+      cells += `<td class="total-col" style="background:#edfaf0"></td>`;
+      injectRow(plRow, cells, id);
+    }
+  } catch(err) {
+    if (loadRow) loadRow.style.display = 'none';
+    injectRow(plRow, `<td class="label" style="padding-left:40px;color:#dc2626;font-size:12px" colspan="${currentMonths.length+2}">Error: ${eh(err.message)}</td>`, id);
+  }
+}
+
+function injectRow(afterRow, cellsHtml, id) {
+  const loadRow = document.getElementById('dload-'+id);
+  const tr = document.createElement('tr');
+  tr.className = `drill-txn-row drill-inserted-${id}`;
+  tr.innerHTML = cellsHtml;
+  if (loadRow && loadRow.parentNode) {
+    loadRow.parentNode.insertBefore(tr, loadRow);
+  } else if (afterRow.parentNode) {
+    afterRow.parentNode.insertBefore(tr, afterRow.nextSibling);
+  }
+}
+
+function eid(s) { return btoa(unescape(encodeURIComponent(s))).replace(/[^a-zA-Z0-9]/g,'_'); }
+function eh(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function ejs(s) { return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+function fmt(n) { return '\u00a3'+Math.abs(Number(n)).toLocaleString('en-GB',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+function fv(n) { const a=Math.abs(Number(n)).toLocaleString('en-GB',{minimumFractionDigits:0,maximumFractionDigits:0}); return (Number(n)<0?'-':'')+'\u00a3'+a; }
+
+initDates();
+loadData();
+</script>
+<script>document.getElementById("logo-img").src=FIXMART_LOGO;</script>
+</body>
+</html>
