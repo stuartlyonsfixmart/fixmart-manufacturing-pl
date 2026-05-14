@@ -79,6 +79,12 @@
   .pl-total-row td.red { color: var(--red); }
   .pl-total-row td.green { color: var(--green); }
   .pl-total-row td.total-col { background: #f0f0ee; border-left: 2px solid var(--border); font-size: 16px; }
+  /* Gross profit row — highlighted */
+  .pl-gp-row td { padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; border-top: 2px solid var(--lime-dark); border-bottom: 2px solid var(--lime-dark); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; white-space: nowrap; background: #f5ffe0; }
+  .pl-gp-row td.label { text-align: left; position: sticky; left: 0; background: #f5ffe0; z-index: 1; color: var(--lime-dark); }
+  .pl-gp-row td.red { color: var(--red); }
+  .pl-gp-row td.green { color: var(--green); }
+  .pl-gp-row td.total-col { background: #edfaca; border-left: 2px solid var(--border); font-size: 16px; }
   .drill-arrow { color: #ccc; font-size: 9px; margin-left: 4px; }
   .drill-row { display: none; background: #fafffe; }
   .drill-row.open { display: table-row; }
@@ -289,11 +295,18 @@ function renderPL(sd, ed) {
   const totNet = totRev + totCost;
   const numCols = months.length + 2;
 
+  // Pre-calculate COS totals for Gross Profit row
+  const cosGroup = groupedLines.find(g=>g.id==='cos');
+  const cosByMonth = {};
+  months.forEach(mo => { cosByMonth[mo] = cosGroup ? cosGroup.lines.reduce((s,[,v])=>s+(v.months[mo]||0),0) : 0; });
+  const cosTotal = cosGroup ? cosGroup.lines.reduce((s,[,v])=>s+v.total,0) : 0;
+
   let h = '<div class="pl-table-wrap"><table class="pl-table"><thead><tr>';
   h += '<th class="left">Line</th>';
   months.forEach(mo => { h += `<th>${fmtMonth(mo)}</th>`; });
   h += '<th class="total-col">Total</th></tr></thead><tbody>';
 
+  // Revenue
   h += `<tr class="pl-section-header"><td colspan="${numCols}">Revenue</td></tr>`;
   revLines.forEach(([lbl,v]) => {
     const id = eid(lbl);
@@ -308,6 +321,7 @@ function renderPL(sd, ed) {
   months.forEach(mo => { h += `<td class="green">${fv(totRevByMonth[mo]||0)}</td>`; });
   h += `<td class="total-col green">${fv(totRev)}</td></tr>`;
 
+  // Costs — grouped
   h += `<tr class="pl-section-header"><td colspan="${numCols}">Costs</td></tr>`;
   groupedLines.forEach(grp => {
     if (!grp.lines.length) return;
@@ -331,6 +345,17 @@ function renderPL(sd, ed) {
       h += `<td class="total-col ${lineCls}">${fv(v.total)}</td></tr>`;
       h += `<tr class="drill-row group-child-${gid}" id="dr-${id}" style="display:none"><td colspan="${numCols}" style="padding:0"><div id="di-${id}"></div></td></tr>`;
     });
+
+    // Insert Gross Profit row immediately after COS group
+    if (grp.id === 'cos') {
+      const gpByMonth = {};
+      months.forEach(mo => { gpByMonth[mo] = (totRevByMonth[mo]||0) + (cosByMonth[mo]||0); });
+      const gpTotal = totRev + cosTotal;
+      const gpCls = gpTotal>=0?'green':'red';
+      h += `<tr class="pl-gp-row"><td class="label">Gross Profit</td>`;
+      months.forEach(mo => { const v=gpByMonth[mo]||0; h += `<td class="${v>=0?'green':'red'}">${fv(v)}</td>`; });
+      h += `<td class="total-col ${gpCls}">${fv(gpTotal)}</td></tr>`;
+    }
   });
 
   h += `<tr class="pl-total-row"><td class="label">Total Costs</td>`;
