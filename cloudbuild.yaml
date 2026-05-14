@@ -1,14 +1,7 @@
 steps:
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    args:
-      - run
-      - deploy
-      - fixmart-manufacturing-pl
-      - --source=.
-      - --region=europe-west1
-      - --platform=managed
-      - --allow-unauthenticated
-      - --min-instances=1
-    entrypoint: gcloud
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-west1-docker.pkg.dev/project-aa7ee149-5e29-4eb4-8bc/cloud-run-source-deploy/fixmart-manufacturing-pl', '.']
+images:
+  - 'europe-west1-docker.pkg.dev/project-aa7ee149-5e29-4eb4-8bc/cloud-run-source-deploy/fixmart-manufacturing-pl'
 options:
   logging: CLOUD_LOGGING_ONLY
