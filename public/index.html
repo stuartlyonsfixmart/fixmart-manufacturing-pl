@@ -28,7 +28,7 @@
   .last-updated { color: rgba(255,255,255,0.3); font-size: 11px; font-family: 'DM Mono', monospace; }
   .logout-btn { color: rgba(255,255,255,0.35); text-decoration: none; font-size: 12px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.15s; }
   .logout-btn:hover { color: rgba(255,255,255,0.7); }
-  .main { padding: 16px 24px; max-width: 1400px; margin: 0 auto; }
+  .main { padding: 16px 24px; max-width: 100%; margin: 0 auto; }
   .filters-bar { background: var(--black); border-radius: 6px; padding: 10px 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
   .filter-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
   .filter-group { display: flex; align-items: center; gap: 7px; }
@@ -48,24 +48,28 @@
   .table-bar { background: var(--black); border-radius: 6px 6px 0 0; padding: 9px 16px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
   .table-bar-title { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.07em; }
   .table-count { font-size: 11px; color: rgba(255,255,255,0.45); font-family: 'DM Mono', monospace; }
-  .pl-table-wrap { background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; overflow: hidden; }
-  .pl-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .pl-table-wrap { background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; overflow-x: auto; }
+  .pl-table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .pl-table thead { background: #f8f8f6; }
-  .pl-table thead th { padding: 8px 14px; text-align: left; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); }
-  .pl-table thead th.right { text-align: right; }
-  .pl-section-header td { background: #f0f0ee; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding: 5px 14px; border-bottom: 1px solid var(--border); }
+  .pl-table thead th { padding: 7px 10px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .pl-table thead th.left { text-align: left; min-width: 180px; position: sticky; left: 0; background: #f8f8f6; z-index: 2; }
+  .pl-table thead th.total-col { background: #f0f0ee; color: var(--black); border-left: 2px solid var(--border); }
+  .pl-section-header td { background: #f0f0ee; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding: 5px 10px; border-bottom: 1px solid var(--border); position: sticky; left: 0; }
   .pl-row { border-bottom: 1px solid #f5f5f3; cursor: pointer; transition: background 0.1s; }
   .pl-row:hover { background: #fafaf8; }
-  .pl-row td { padding: 9px 14px; }
-  .pl-row td.right { text-align: right; font-family: 'DM Mono', monospace; }
-  .pl-row td.label { font-weight: 500; }
+  .pl-row td { padding: 7px 10px; text-align: right; font-family: 'DM Mono', monospace; font-size: 11px; white-space: nowrap; }
+  .pl-row td.label { text-align: left; font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 500; position: sticky; left: 0; background: #fff; z-index: 1; }
+  .pl-row:hover td.label { background: #fafaf8; }
   .pl-row td.red { color: var(--red); }
   .pl-row td.green { color: var(--green); }
-  .pl-total-row td { padding: 10px 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 800; border-top: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.05em; }
-  .pl-total-row td.right { text-align: right; font-family: 'DM Mono', monospace; font-size: 16px; }
+  .pl-row td.total-col { background: #fafaf8; border-left: 2px solid var(--border); font-weight: 700; font-size: 12px; }
+  .pl-row:hover td.total-col { background: #f5f5f0; }
+  .pl-total-row td { padding: 8px 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 800; border-top: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; white-space: nowrap; }
+  .pl-total-row td.label { text-align: left; font-family: 'Barlow Condensed', sans-serif; position: sticky; left: 0; background: #fff; z-index: 1; }
   .pl-total-row td.red { color: var(--red); }
   .pl-total-row td.green { color: var(--green); }
-  .drill-arrow { color: #ccc; font-size: 10px; margin-left: 6px; }
+  .pl-total-row td.total-col { background: #f0f0ee; border-left: 2px solid var(--border); font-size: 14px; }
+  .drill-arrow { color: #ccc; font-size: 10px; margin-left: 4px; }
   .drill-row { display: none; background: #fafffe; }
   .drill-row.open { display: table-row; }
   .drill-table { width: 100%; border-collapse: collapse; font-size: 12px; }
@@ -240,46 +244,90 @@ async function loadData() {
   }
 }
 
+function fmtMonth(ym) {
+  const [y,m] = ym.slice(0,7).split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[parseInt(m,10)-1] + ' ' + y.slice(2);
+}
+
 function renderPL(sd, ed) {
+  // Get sorted unique months from data
+  const monthSet = new Set();
+  linesData.forEach(r => { if(r.period_date) monthSet.add(r.period_date.slice(0,7)); });
+  const months = Array.from(monthSet).sort();
+
+  // Build lookup: label -> month -> total
   const byLabel = {};
   linesData.forEach(r => {
-    if (!byLabel[r.line_label]) byLabel[r.line_label] = {section: r.section, total: 0};
-    byLabel[r.line_label].total += r.total;
+    const lbl = r.line_label, mo = r.period_date ? r.period_date.slice(0,7) : '';
+    if (!byLabel[lbl]) byLabel[lbl] = { section: r.section, months: {}, total: 0 };
+    byLabel[lbl].months[mo] = (byLabel[lbl].months[mo] || 0) + r.total;
+    byLabel[lbl].total += r.total;
   });
 
   const revLines = Object.entries(byLabel).filter(([,v])=>v.section==='Revenue').sort((a,b)=>b[1].total-a[1].total);
   const costLines = Object.entries(byLabel).filter(([,v])=>v.section==='Cost').sort((a,b)=>a[1].total-b[1].total);
 
+  const totRevByMonth = {}, totCostByMonth = {};
+  months.forEach(mo => {
+    totRevByMonth[mo] = revLines.reduce((s,[,v])=>s+(v.months[mo]||0),0);
+    totCostByMonth[mo] = costLines.reduce((s,[,v])=>s+(v.months[mo]||0),0);
+  });
   const totRev = revLines.reduce((s,[,v])=>s+v.total,0);
   const totCost = costLines.reduce((s,[,v])=>s+v.total,0);
   const totNet = totRev + totCost;
+  const numCols = months.length + 2; // label + months + total
 
-  let h = '<div class="pl-table-wrap"><table class="pl-table">';
-  h += '<thead><tr><th>Line</th><th class="right">Total</th></tr></thead><tbody>';
+  let h = '<div class="pl-table-wrap"><table class="pl-table"><thead><tr>';
+  h += '<th class="left">Line</th>';
+  months.forEach(mo => { h += `<th>${fmtMonth(mo)}</th>`; });
+  h += '<th class="total-col">Total</th>';
+  h += '</tr></thead><tbody>';
 
-  h += '<tr class="pl-section-header"><td colspan="2">Revenue</td></tr>';
+  // Revenue section
+  h += `<tr class="pl-section-header"><td colspan="${numCols}">Revenue</td></tr>`;
   revLines.forEach(([lbl,v]) => {
     const id = eid(lbl);
     h += `<tr class="pl-row" onclick="toggleDrill('${ejs(lbl)}','${sd}','${ed}','${id}')">`;
     h += `<td class="label">${eh(lbl)} <span class="drill-arrow">&#9654;</span></td>`;
-    h += `<td class="right green">${fv(v.total)}</td></tr>`;
-    h += `<tr class="drill-row" id="dr-${id}"><td colspan="2" style="padding:0"><div id="di-${id}"></div></td></tr>`;
+    months.forEach(mo => { h += `<td class="green">${v.months[mo] ? fv(v.months[mo]) : '\u2014'}</td>`; });
+    h += `<td class="total-col green">${fv(v.total)}</td>`;
+    h += '</tr>';
+    h += `<tr class="drill-row" id="dr-${id}"><td colspan="${numCols}" style="padding:0"><div id="di-${id}"></div></td></tr>`;
   });
-  h += `<tr class="pl-total-row"><td>Total Revenue</td><td class="right green">${fv(totRev)}</td></tr>`;
+  h += `<tr class="pl-total-row"><td class="label">Total Revenue</td>`;
+  months.forEach(mo => { h += `<td class="green">${fv(totRevByMonth[mo]||0)}</td>`; });
+  h += `<td class="total-col green">${fv(totRev)}</td></tr>`;
 
-  h += '<tr class="pl-section-header"><td colspan="2">Costs</td></tr>';
+  // Costs section
+  h += `<tr class="pl-section-header"><td colspan="${numCols}">Costs</td></tr>`;
   costLines.forEach(([lbl,v]) => {
     const id = eid(lbl);
     const cls = v.total<0?'red':'green';
     h += `<tr class="pl-row" onclick="toggleDrill('${ejs(lbl)}','${sd}','${ed}','${id}')">`;
     h += `<td class="label">${eh(lbl)} <span class="drill-arrow">&#9654;</span></td>`;
-    h += `<td class="right ${cls}">${fv(v.total)}</td></tr>`;
-    h += `<tr class="drill-row" id="dr-${id}"><td colspan="2" style="padding:0"><div id="di-${id}"></div></td></tr>`;
+    months.forEach(mo => {
+      const val = v.months[mo] || 0;
+      h += `<td class="${val<0?'red':'green'}">${val ? fv(val) : '\u2014'}</td>`;
+    });
+    h += `<td class="total-col ${cls}">${fv(v.total)}</td>`;
+    h += '</tr>';
+    h += `<tr class="drill-row" id="dr-${id}"><td colspan="${numCols}" style="padding:0"><div id="di-${id}"></div></td></tr>`;
   });
-  h += `<tr class="pl-total-row"><td>Total Costs</td><td class="right red">${fv(totCost)}</td></tr>`;
+  h += `<tr class="pl-total-row"><td class="label">Total Costs</td>`;
+  months.forEach(mo => { h += `<td class="red">${fv(totCostByMonth[mo]||0)}</td>`; });
+  h += `<td class="total-col red">${fv(totCost)}</td></tr>`;
 
-  const nc = totNet>=0?'green':'red';
-  h += `<tr class="pl-total-row" style="background:#f8f8f6"><td>Net Result</td><td class="right ${nc}">${fv(totNet)}</td></tr>`;
+  // Net result row
+  const netByMonth = {};
+  months.forEach(mo => { netByMonth[mo] = (totRevByMonth[mo]||0) + (totCostByMonth[mo]||0); });
+  h += `<tr class="pl-total-row" style="background:#f8f8f6"><td class="label">Net Result</td>`;
+  months.forEach(mo => {
+    const v = netByMonth[mo]||0;
+    h += `<td class="${v>=0?'green':'red'}">${fv(v)}</td>`;
+  });
+  h += `<td class="total-col ${totNet>=0?'green':'red'}">${fv(totNet)}</td></tr>`;
+
   h += '</tbody></table></div>';
   document.getElementById('main-content').innerHTML = h;
 }
