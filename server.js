@@ -105,7 +105,7 @@ app.get('/api/detail', requireAuth, async (req, res) => {
   if (cached) return res.json({ success: true, data: cached, fromCache: true });
   try {
     const [rows] = await bq.query({
-      query: `SELECT transaction_date, reference, description, nominal, source, ROUND(net_amount,2) AS net_amount FROM ${DS} WHERE period_date BETWEEN @startDate AND @endDate AND line_label=@lineLabel ORDER BY transaction_date, net_amount`,
+      query: `SELECT DISTINCT transaction_date, reference, description, nominal, source, ROUND(net_amount,2) AS net_amount FROM ${DS} WHERE period_date BETWEEN @startDate AND @endDate AND line_label=@lineLabel ORDER BY transaction_date, net_amount`,
       params: { startDate, endDate, lineLabel }, location: 'europe-west2'
     });
     const data = rows.map(r => ({
