@@ -32,6 +32,10 @@ app.get('/logo.js', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'logo.js'));
 });
 
+app.get('/fixmart-logo.webp', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'fixmart-logo.webp'));
+});
+
 function requireAuth(req, res, next) {
   if (req.session && req.session.user) return next();
   // API routes get JSON 401; page routes get redirect
