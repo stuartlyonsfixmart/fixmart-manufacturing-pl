@@ -130,8 +130,7 @@
     <div class="filter-group">
       <span class="filter-label">Period</span>
       <div class="toggle">
-        <button class="toggle-btn active" id="btn-cm" onclick="setCurrentMonth()">Current month</button>
-        <button class="toggle-btn" id="btn-ytd" onclick="setYTD()">YTD</button>
+        <button class="toggle-btn active" id="btn-ytd" onclick="setYTD()">YTD</button>
         <button class="toggle-btn" id="btn-3m" onclick="setMonths(3)">3m</button>
         <button class="toggle-btn" id="btn-6m" onclick="setMonths(6)">6m</button>
         <button class="toggle-btn" id="btn-12m" onclick="setMonths(12)">12m</button>
@@ -207,19 +206,13 @@ function lastDay(ym) { const [y,m] = ym.split('-').map(Number); return new Date(
 function fmtMonth(ym) { const [y,m] = ym.slice(0,7).split('-'); const ms = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return ms[parseInt(m,10)-1] + ' ' + y.slice(2); }
 function txnMonth(d) { return d ? d.slice(0,7) : ''; }
 
-function setCurrentMonth() {
-  const now = toMonthStr(new Date());
-  document.getElementById('month-from').value = now;
-  document.getElementById('month-to').value = now;
-  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('btn-cm').classList.add('active');
-  loadData();
-}
 function setYTD() {
   const now = new Date();
-  const ytdFrom = now.getFullYear() + '-01';
+  const prior = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const priorStr = toMonthStr(prior);
+  const ytdFrom = prior.getFullYear() + '-01';
   document.getElementById('month-from').value = ytdFrom;
-  document.getElementById('month-to').value = toMonthStr(now);
+  document.getElementById('month-to').value = priorStr;
   document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('btn-ytd').classList.add('active');
   loadData();
@@ -245,9 +238,12 @@ function applyCustomRange() {
   loadData();
 }
 function initDates() {
-  const now = toMonthStr(new Date());
-  document.getElementById('month-from').value = now;
-  document.getElementById('month-to').value = now;
+  const now = new Date();
+  const prior = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const priorStr = toMonthStr(prior);
+  const ytdFrom = prior.getFullYear() + '-01';
+  document.getElementById('month-from').value = ytdFrom;
+  document.getElementById('month-to').value = priorStr;
 }
 
 async function loadData() {
