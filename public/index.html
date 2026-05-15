@@ -322,10 +322,9 @@ function renderPL(sd, ed) {
     const id = eid(lbl);
     const tip = LINE_TOOLTIPS[lbl] ? `<span class="tip"><span class="tip-icon">i</span><span class="tip-box">${LINE_TOOLTIPS[lbl]}</span></span>` : '';
     h += `<tr class="pl-row" id="plr-${id}" onclick="toggleDrill('${ejs(lbl)}','${sd}','${ed}','${id}')">`;
-    h += `<td class="label">${eh(lbl)}${tip} <span class="drill-arrow">&#9654;</span></td>`;
+    h += `<td class="label">${eh(lbl)}${tip} <span class="drill-arrow" id="darr-${id}">&#9654;</span></td>`;
     months.forEach(mo => { h += `<td class="green">${v.months[mo] ? fv(v.months[mo]) : '\u2014'}</td>`; });
     h += `<td class="total-col green">${fv(v.total)}</td></tr>`;
-    h += `<tr id="dload-${id}" style="display:none"><td class="label" style="padding-left:40px;font-size:12px;color:#999" colspan="${numCols}"><span class="spinner"></span> Loading...</td></tr>`;
   });
   h += `<tr class="pl-total-row"><td class="label">Total Revenue</td>`;
   months.forEach(mo => { h += `<td class="green">${fv(totRevByMonth[mo]||0)}</td>`; });
@@ -349,10 +348,9 @@ function renderPL(sd, ed) {
       const lineCls = v.total<0?'red':'green';
       const tip = LINE_TOOLTIPS[lbl] ? `<span class="tip"><span class="tip-icon">i</span><span class="tip-box">${LINE_TOOLTIPS[lbl]}</span></span>` : '';
       h += `<tr class="pl-row group-child-${gid}" id="plr-${id}" style="display:${isOpen?'table-row':'none'}" onclick="toggleDrill('${ejs(lbl)}','${sd}','${ed}','${id}')">`;
-      h += `<td class="label">${eh(lbl)}${tip} <span class="drill-arrow">&#9654;</span></td>`;
+      h += `<td class="label">${eh(lbl)}${tip} <span class="drill-arrow" id="darr-${id}">&#9654;</span></td>`;
       months.forEach(mo => { const val=v.months[mo]||0; h += `<td class="${val<0?'red':'green'}">${val?fv(val):'\u2014'}</td>`; });
       h += `<td class="total-col ${lineCls}">${fv(v.total)}</td></tr>`;
-      h += `<tr id="dload-${id}" class="group-child-${gid}" style="display:none"><td class="label" style="padding-left:40px;font-size:12px;color:#999" colspan="${numCols}"><span class="spinner"></span> Loading...</td></tr>`;
     });
     if (grp.id === 'cos') {
       const gpByMonth = {};
@@ -391,25 +389,35 @@ function toggleGroup(gid) {
 
 function removeDrillRows(id) {
   document.querySelectorAll(`.drill-inserted-${id}`).forEach(r => r.remove());
+  const arrow = document.getElementById('darr-'+id);
+  if (arrow) arrow.innerHTML = '&#9654;';
 }
 
 async function toggleDrill(lbl, sd, ed, id) {
   const plRow = document.getElementById('plr-'+id);
-  const loadRow = document.getElementById('dload-'+id);
+  const arrow = document.getElementById('darr-'+id);
   if (!plRow) return;
   if (openDrills[id]) {
     removeDrillRows(id);
-    if (loadRow) loadRow.style.display = 'none';
+    const existingLoad = document.getElementById('dload-'+id);
+    if (existingLoad) existingLoad.remove();
+    if (arrow) arrow.innerHTML = '&#9654;';
     openDrills[id] = false;
     return;
   }
   openDrills[id] = true;
-  if (loadRow) loadRow.style.display = 'table-row';
+  if (arrow) arrow.innerHTML = '<span class="spinner" style="width:10px;height:10px;border-width:1.5px;margin:0"></span>';
+  // Create loading row dynamically
+  const loadTr = document.createElement('tr');
+  loadTr.id = 'dload-'+id;
+  loadTr.innerHTML = `<td class="label" style="padding-left:40px;font-size:12px;color:#999" colspan="${currentMonths.length+2}">Loading...</td>`;
+  plRow.parentNode.insertBefore(loadTr, plRow.nextSibling);
   try {
     const res = await fetch(`/api/detail?startDate=${sd}&endDate=${ed}&lineLabel=${encodeURIComponent(lbl)}`);
     const json = await res.json();
     if (!plRow.parentNode) return;
-    if (loadRow) loadRow.style.display = 'none';
+    loadTr.remove();
+    if (arrow) arrow.innerHTML = '&#9660;';
     if (json.error === 'session_expired') { window.location.href = '/login.html'; return; }
     if (!json.success) throw new Error(json.error);
     if (!json.data.length) { injectRow(plRow, `<td class="label" style="padding-left:40px;color:#999;font-size:12px" colspan="${currentMonths.length+2}">No transactions found</td>`, id); return; }
@@ -431,7 +439,10 @@ async function toggleDrill(lbl, sd, ed, id) {
       injectRow(plRow, cells, id);
     }
   } catch(err) {
-    if (loadRow) loadRow.style.display = 'none';
+    const existingLoad = document.getElementById('dload-'+id);
+    if (existingLoad) existingLoad.remove();
+    if (arrow) arrow.innerHTML = '&#9654;';
+    openDrills[id] = false;
     injectRow(plRow, `<td class="label" style="padding-left:40px;color:#dc2626;font-size:12px" colspan="${currentMonths.length+2}">Error: ${eh(err.message)}</td>`, id);
   }
 }
