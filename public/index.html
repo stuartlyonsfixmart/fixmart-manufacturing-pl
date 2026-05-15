@@ -133,8 +133,10 @@
     <div class="filter-group">
       <span class="filter-label">Period</span>
       <div class="toggle">
+        <button class="toggle-btn active" id="btn-cm" onclick="setCurrentMonth()">Current month</button>
+        <button class="toggle-btn" id="btn-ytd" onclick="setYTD()">YTD</button>
         <button class="toggle-btn" id="btn-3m" onclick="setMonths(3)">3m</button>
-        <button class="toggle-btn active" id="btn-6m" onclick="setMonths(6)">6m</button>
+        <button class="toggle-btn" id="btn-6m" onclick="setMonths(6)">6m</button>
         <button class="toggle-btn" id="btn-12m" onclick="setMonths(12)">12m</button>
         <button class="toggle-btn" id="btn-all" onclick="setAll()">All</button>
       </div>
@@ -208,6 +210,23 @@ function lastDay(ym) { const [y,m] = ym.split('-').map(Number); return new Date(
 function fmtMonth(ym) { const [y,m] = ym.slice(0,7).split('-'); const ms = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return ms[parseInt(m,10)-1] + ' ' + y.slice(2); }
 function txnMonth(d) { return d ? d.slice(0,7) : ''; }
 
+function setCurrentMonth() {
+  const now = toMonthStr(new Date());
+  document.getElementById('month-from').value = now;
+  document.getElementById('month-to').value = now;
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-cm').classList.add('active');
+  loadData();
+}
+function setYTD() {
+  const now = new Date();
+  const ytdFrom = now.getFullYear() + '-01';
+  document.getElementById('month-from').value = ytdFrom;
+  document.getElementById('month-to').value = toMonthStr(now);
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-ytd').classList.add('active');
+  loadData();
+}
 function setMonths(n) {
   const to = new Date(), from = new Date();
   from.setMonth(from.getMonth()-n+1); from.setDate(1);
@@ -229,10 +248,9 @@ function applyCustomRange() {
   loadData();
 }
 function initDates() {
-  const to = new Date(), from = new Date();
-  from.setMonth(from.getMonth()-5); from.setDate(1);
-  document.getElementById('month-from').value = toMonthStr(from);
-  document.getElementById('month-to').value = toMonthStr(to);
+  const now = toMonthStr(new Date());
+  document.getElementById('month-from').value = now;
+  document.getElementById('month-to').value = now;
 }
 
 async function loadData() {
@@ -274,7 +292,7 @@ async function loadData() {
 function renderPL(sd, ed) {
   const monthSet = new Set();
   linesData.forEach(r => { if(r.period_date) monthSet.add(r.period_date.slice(0,7)); });
-  const months = Array.from(monthSet).sort();
+  const months = Array.from(monthSet).sort().reverse();
   currentMonths = months;
   const byLabel = {};
   linesData.forEach(r => {
