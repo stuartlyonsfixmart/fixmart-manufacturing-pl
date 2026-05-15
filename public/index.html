@@ -441,7 +441,7 @@ async function toggleDrill(lbl, sd, ed, id) {
     if (!json.data.length) { injectRow(plRow, `<td class="label" style="padding-left:40px;color:#999;font-size:12px" colspan="${currentMonths.length+2}">No transactions found</td>`, id); return; }
     const byMonth = {};
     json.data.forEach(r => { const mo = txnMonth(r.transaction_date); if (!byMonth[mo]) byMonth[mo] = []; byMonth[mo].push(r); });
-    const maxRows = Math.max(...currentMonths.map(mo => (byMonth[mo]||[]).length));
+    const maxRows = Math.max(0, ...currentMonths.map(mo => (byMonth[mo]||[]).length));
     for (let i = 0; i < maxRows; i++) {
       let cells = `<td class="label" style="padding-left:40px;background:#f4fff4"></td>`;
       currentMonths.forEach(mo => {
@@ -466,14 +466,15 @@ async function toggleDrill(lbl, sd, ed, id) {
 }
 
 function injectRow(afterRow, cellsHtml, id) {
-  const loadRow = document.getElementById('dload-'+id);
   const tr = document.createElement('tr');
   tr.className = `drill-txn-row drill-inserted-${id}`;
   tr.innerHTML = cellsHtml;
-  if (loadRow && loadRow.parentNode) {
-    loadRow.parentNode.insertBefore(tr, loadRow);
-  } else if (afterRow.parentNode) {
-    afterRow.parentNode.insertBefore(tr, afterRow.nextSibling);
+  const existing = [...document.querySelectorAll(`.drill-inserted-${id}`)];
+  const anchor = existing.length ? existing[existing.length-1] : afterRow;
+  if (anchor.nextSibling) {
+    anchor.parentNode.insertBefore(tr, anchor.nextSibling);
+  } else {
+    anchor.parentNode.appendChild(tr);
   }
 }
 

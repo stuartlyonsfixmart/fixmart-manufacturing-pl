@@ -7,7 +7,8 @@ const { BigQuery } = require('@google-cloud/bigquery');
 const NodeCache = require('node-cache');
 
 const app = express();
-const bq = new BigQuery({ projectId: 'project-aa7ee149-5e29-4eb4-8bc' });
+const PROJECT_ID = process.env.BQ_PROJECT_ID || 'project-aa7ee149-5e29-4eb4-8bc';
+const bq = new BigQuery({ projectId: PROJECT_ID });
 const cache = new NodeCache({ stdTTL: 600 });
 
 const PORT = process.env.PORT || 8080;
@@ -55,7 +56,7 @@ app.get('/logout', (req, res) => {
   res.redirect('/login.html');
 });
 
-const DS = '`project-aa7ee149-5e29-4eb4-8bc.fixmart_bi.vw_manufacturing_pl`';
+const DS = `\`${PROJECT_ID}.fixmart_bi.vw_manufacturing_pl\``;
 
 app.get('/api/summary', requireAuth, async (req, res) => {
   const { startDate, endDate } = req.query;
