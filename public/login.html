@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="/logo.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fixmart — Manufacturing P&L</title>
@@ -13,8 +12,7 @@
   body { font-family: 'Barlow', sans-serif; background: var(--offwhite); color: var(--black); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
   .login-wrap { width: 400px; }
   .login-header { margin-bottom: 32px; }
-  .login-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-  .logo-img { height: 28px; width: auto; }
+  .login-logo { margin-bottom: 20px; }
   .login-title { font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; color: var(--black); line-height: 1; }
   .login-title span { color: var(--lime-dark); }
   .login-sub { font-size: 12px; color: var(--muted); margin-top: 6px; }
@@ -33,7 +31,7 @@
 <div class="login-wrap">
   <div class="login-header">
     <div class="login-logo">
-      <img class="logo-img" id="logo-img" src="" alt="Fixmart">
+      <img src="/logo.webp" alt="Fixmart" style="height:36px;display:block;">
     </div>
     <div class="login-title">Manufacturing <span>P&amp;L</span></div>
     <div class="login-sub">Aylesford operations — restricted access</div>
@@ -48,6 +46,5 @@
   </div>
 </div>
 <script>if (window.location.search.includes('error=1')) { document.getElementById('err').classList.add('show'); }</script>
-<script>document.getElementById("logo-img").src=FIXMART_LOGO;</script>
 </body>
 </html>
